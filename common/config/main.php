@@ -23,6 +23,21 @@ return [
             ),
         ],
 
+//        'gii' => [
+//
+//            'class' => 'yii\gii\Module',
+//            'allowedIPs' => ['*'] // adjust this to your needs
+//        ],
+
+//        'generators' => [ //here
+//            'crud' => [
+//                'class' => 'yii\gii\generators\crud\Generator',
+//                'templates' => [
+//                    'adminlte' => '@vendor/dmstr/yii2-adminlte-asset/gii/templates/crud/simple',
+//                ]
+//            ]
+//        ],
+
         'view' => [
             'theme' => [
                 'pathMap' => [

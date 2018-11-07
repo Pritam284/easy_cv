@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use backend\assets\AppAsset;
 use backend\models\SignupForm;
 use Yii;
 use yii\web\Controller;
@@ -90,6 +91,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+//        $this->layout = "custom";
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -100,7 +102,7 @@ class SiteController extends Controller
         } else {
             $model->password = '';
 
-            return $this->render('login', [
+            return $this->render('signin', [
                 'model' => $model,
             ]);
         }
