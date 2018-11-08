@@ -12,6 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'layout' => 'adminlte-pritam\main',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -45,6 +46,14 @@ return [
             ],
         ],
         */
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => '@backend/views/layout/adminlte_pritam'
+                ],
+            ],
+        ],
     ],
     'params' => $params,
+
 ];

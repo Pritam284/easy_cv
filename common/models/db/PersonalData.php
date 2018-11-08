@@ -46,6 +46,7 @@ class PersonalData extends \yii\db\ActiveRecord
             [['father_name', 'mother_name', 'religion', 'country', 'contact_no'], 'string', 'max' => 50],
             [['photo', 'email'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            ['email', 'email'],
         ];
     }
 

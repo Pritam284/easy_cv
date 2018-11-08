@@ -80,10 +80,13 @@ class PersonalDataController extends Controller
     public function actionCreate()
     {
         $model = new PersonalData();
+        $model->user_id = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->getFlash('Personal Data Saved Successfully');
             return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
+        } else {
+//            print_r($model->getErrors());
         }
 
         return $this->render('create', [
