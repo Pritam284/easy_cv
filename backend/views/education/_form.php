@@ -1,5 +1,6 @@
 <?php
 
+use dosamigos\datepicker\DateRangePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -20,9 +21,16 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'subject')->textInput() ?>
 
-            <?= $form->field($model, 'year_from')->textInput() ?>
-
-            <?= $form->field($model, 'year_to')->textInput() ?>
+            <?= $form->field($model, 'year_from')->textInput()->widget(DateRangePicker::className(), [
+                'attributeTo' => 'year_to',
+                'form' => $form, // best for correct client validation
+                'language' => 'en',
+                'size' => 'lg',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ])->label('Duration'); ?>
 
             <?= $form->field($model, 'result')->textInput() ?>
 
