@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Achievement */
 
-$this->title = 'Create Achievement';
+$this->title = 'Add Achievement';
 $this->params['breadcrumbs'][] = ['label' => 'Achievements', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
