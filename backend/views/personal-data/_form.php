@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\PersonalData */
@@ -16,13 +17,23 @@ use yii\widgets\ActiveForm;
     <div class="row">
         <div class="col-md-6">
 
-            <?php $form = ActiveForm::begin(); ?>
+            <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
             <?= $form->field($model, 'father_name')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'mother_name')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'dob')->textInput() ?>
+            <label>D.O.B</label>
+            <?= DatePicker::widget([
+                'model' => $model,
+                'attribute' => 'dob',
+                'template' => '{addon}{input}',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ]);?> <br>
+
 
             <?= $form->field($model, 'gender')->dropDownList([ 'Male' => 'Male', 'Female' => 'Female', 'Others' => 'Others', ], ['prompt' => '']) ?>
 
@@ -34,7 +45,7 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'blood_group')->dropDownList([ 'A+' => 'A+', 'A-' => 'A-', 'B+' => 'B+', 'B-' => 'B-', 'O+' => 'O+', 'O-' => 'O-', 'AB+' => 'AB+', 'AB-' => 'AB-', ], ['prompt' => '']) ?>
 
-            <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'photo')->fileInput() ?>
 
             <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 

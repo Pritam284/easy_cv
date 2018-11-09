@@ -1,5 +1,6 @@
 <?php
 
+use dosamigos\datepicker\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -10,22 +11,36 @@ use yii\widgets\ActiveForm;
 
 <div class="certification-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'authority')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'authority')->textInput(['maxlength' => true]) ?>
+            <label>Year</label>
+            <?= DatePicker::widget([
+                'model' => $model,
+                'attribute' => 'year',
+//                'label' => 'Year',
+                'template' => '{addon}{input}',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ]);?> <br>
 
-    <?= $form->field($model, 'year')->textInput() ?>
+            <?= $form->field($model, 'certificate_no')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'certificate_no')->textInput(['maxlength' => true]) ?>
+            <div class="form-group">
+                <?= Html::submitButton('Add', ['class' => 'btn btn-success']) ?>
+            </div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
 
-    <?php ActiveForm::end(); ?>
+
 
 </div>

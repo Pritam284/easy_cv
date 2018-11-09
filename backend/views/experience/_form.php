@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use dosamigos\datepicker\DateRangePicker;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -10,28 +11,39 @@ use yii\widgets\ActiveForm;
 
 <div class="experience-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+            <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'designation')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'designation')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'department')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'department')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'year_from')->textInput()->widget(DateRangePicker::className(), [
+                'attributeTo' => 'year_to',
+                'form' => $form, // best for correct client validation
+                'language' => 'en',
+                'size' => 'lg',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ])->label('Duration'); ?>
 
-    <?= $form->field($model, 'year_from')->textInput() ?>
+            <?= $form->field($model, 'responsibilities')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'year_to')->textInput() ?>
+            <?= $form->field($model, 'currently_working')->checkbox(); ?>
 
-    <?= $form->field($model, 'responsibilities')->textarea(['rows' => 6]) ?>
+            <div class="form-group">
+                <?= Html::submitButton('Add', ['class' => 'btn btn-success']) ?>
+            </div>
 
-    <?= $form->field($model, 'currently_working')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
 
-    <?php ActiveForm::end(); ?>
+
 
 </div>

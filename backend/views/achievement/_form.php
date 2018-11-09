@@ -1,6 +1,6 @@
 <?php
 
-
+use dosamigos\datepicker\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -19,17 +19,17 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'authority')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'year')->textInput()?>
-
+            <label>Year</label>
             <?= DatePicker::widget([
                 'model' => $model,
-                'attribute' => 'date',
+                'attribute' => 'year',
+//                'label' => 'Year',
                 'template' => '{addon}{input}',
                 'clientOptions' => [
                     'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
+                    'format' => 'yyyy-mm-dd'
                 ]
-            ]);?>
+            ]);?> <br>
 
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 

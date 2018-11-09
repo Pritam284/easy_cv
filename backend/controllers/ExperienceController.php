@@ -65,9 +65,10 @@ class ExperienceController extends Controller
     public function actionCreate()
     {
         $model = new Experience();
+        $model->user_id = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
         }
 
         return $this->render('create', [

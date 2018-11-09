@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\db\PersonalData */
 
-$this->title = 'Enter Personal Data';
-$this->params['breadcrumbs'][] = ['label' => 'Personal Data', 'url' => ['index']];
+$this->title = 'Add Personal Informations';
+$this->params['breadcrumbs'][] = ['label' => 'Personal Informations', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="personal-data-create">

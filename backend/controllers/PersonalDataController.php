@@ -10,6 +10,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * PersonalDataController implements the CRUD actions for PersonalData model.
@@ -82,6 +83,7 @@ class PersonalDataController extends Controller
         $model = new PersonalData();
         $model->user_id = Yii::$app->user->id;
 
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->getFlash('Personal Data Saved Successfully');
             return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
@@ -92,6 +94,21 @@ class PersonalDataController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function actionUpload(){
+        $model = new PersonalData();
+
+        if (Yii::$app->request->isPost) {
+            $model->photo = UploadedFile::getInstance($model, 'photo');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return;
+            }
+        }
+        return $this->render('view', [
+                'model' => $model,
+            ]);
     }
 
     /**
@@ -129,6 +146,8 @@ class PersonalDataController extends Controller
 
         return $this->redirect(['index']);
     }
+
+
 
     /**
      * Finds the PersonalData model based on its primary key value.

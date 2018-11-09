@@ -12,30 +12,36 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="experience-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="row">
+        <div class="col-md-6">
+            <h1><?= Html::encode($this->title) ?></h1>
+            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Experience', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+            <p>
+                <?= Html::a('Add Experience', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+//        'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'user_id',
-            'company_name',
-            'designation',
-            'department',
-            //'year_from',
-            //'year_to',
-            //'responsibilities:ntext',
-            //'currently_working',
+//            'id',
+//            'user_id',
+                    'company_name',
+                    'designation',
+                    'department',
+                    'year_from',
+                    'year_to',
+                    'responsibilities:ntext',
+                    'currently_working',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                    ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}'],
+                ],
+            ]); ?>
+        </div>
+    </div>
+
+
 </div>
