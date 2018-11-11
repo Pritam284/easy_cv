@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'country',
                     'marital_status',
                     'blood_group',
-                    'photo',
+//                    'photo',
                     'email:email',
                     'contact_no',
                     ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}'],

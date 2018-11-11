@@ -44,7 +44,7 @@ class PersonalData extends \yii\db\ActiveRecord
             [['dob'], 'safe'],
             [['gender', 'marital_status', 'blood_group'], 'string'],
             [['father_name', 'mother_name', 'religion', 'country', 'contact_no'], 'string', 'max' => 50],
-            [['photo', 'email'], 'string', 'max' => 255],
+            [['email'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             ['email', 'email'],
             [['photo'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg']
@@ -81,13 +81,5 @@ class PersonalData extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public function upload(){
-        if ($this->validate()) {
-            $this->photo->saveAs('uploads/' . $this->photo->baseName . '.' . $this->photo->extension);
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 }

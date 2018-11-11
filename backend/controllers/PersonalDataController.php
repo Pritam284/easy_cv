@@ -84,11 +84,21 @@ class PersonalDataController extends Controller
         $model->user_id = Yii::$app->user->id;
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
             Yii::$app->session->getFlash('Personal Data Saved Successfully');
-            return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
-        } else {
-//            print_r($model->getErrors());
+            $model->photo = UploadedFile::getInstance($model, 'photo');
+
+            if ($model->validate()) {
+
+                $isSave= $model->photo->saveAs('uploads/' . $model->photo->baseName . time() . '.' . $model->photo->extension);
+                if($isSave){
+                    $model->photo = 'uploads/' . $model->photo->baseName . time() . '.' . $model->photo->extension;
+                }
+                $model->save(false);
+                return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
+
+            }
         }
 
         return $this->render('create', [
