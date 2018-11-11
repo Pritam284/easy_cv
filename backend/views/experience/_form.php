@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use dosamigos\datepicker\DateRangePicker;
+use yii\web\JqueryAsset;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -34,7 +35,7 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'responsibilities')->textarea(['rows' => 6]) ?>
 
-            <?= $form->field($model, 'currently_working')->checkbox(); ?>
+            <?= $form->field($model, 'currently_working')->checkbox(['class' => 'currently_working']); ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Add', ['class' => 'btn btn-success']) ?>
@@ -44,6 +45,10 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 
-
-
 </div>
+
+<?php $this->registerJsFile('@web/js/experience.js', [
+    'depends' => [
+        JqueryAsset::className()
+        ]
+    ])?>
