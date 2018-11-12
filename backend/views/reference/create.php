@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Reference */
 
-$this->title = 'Create Reference';
+$this->title = 'Add Reference';
 $this->params['breadcrumbs'][] = ['label' => 'References', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

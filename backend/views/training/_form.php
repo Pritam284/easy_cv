@@ -1,6 +1,8 @@
 <?php
 
+use dosamigos\datepicker\DateRangePicker;
 use yii\helpers\Html;
+use yii\web\JqueryAsset;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -10,26 +12,48 @@ use yii\widgets\ActiveForm;
 
 <div class="training-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <div class="row">
+        <div class="col-md-6">
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+            <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'institute')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'institute')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'year_from')->textInput() ?>
+            <?= $form->field($model, 'year_from')->textInput()->widget(DateRangePicker::className(), [
+                'attributeTo' => 'year_to',
+                'form' => $form, // best for correct client validation
+                'language' => 'en',
+                'size' => 'lg',
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ])->label('Duration'); ?>
 
-    <?= $form->field($model, 'year_to')->textInput() ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'on_training')->checkbox(['class' => 'on_training']) ?>
 
-    <?= $form->field($model, 'on_training')->textInput() ?>
+            <div class="form-group">
+                <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            </div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <?php ActiveForm::end(); ?>
+
+        </div>
     </div>
 
-    <?php ActiveForm::end(); ?>
-
 </div>
+
+<?php
+
+$this->registerJsFile('@web/js/experience.js',[
+
+        'depends' => [
+            JqueryAsset::className()
+        ]
+])
+
+?>

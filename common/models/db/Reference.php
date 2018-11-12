@@ -39,6 +39,7 @@ class Reference extends \yii\db\ActiveRecord
             [['name', 'designation', 'email'], 'string', 'max' => 150],
             [['contact_no'], 'string', 'max' => 50],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            ['email', 'email'],
         ];
     }
 

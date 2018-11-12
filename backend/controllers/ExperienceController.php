@@ -69,9 +69,9 @@ class ExperienceController extends Controller
         $model->user_id = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            echo '<pre>';
-            var_dump($model);
-            die();
+//            echo '<pre>';
+//            var_dump($model);
+//            die();
 
             return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
         }

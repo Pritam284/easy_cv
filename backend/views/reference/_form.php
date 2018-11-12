@@ -10,24 +10,26 @@ use yii\widgets\ActiveForm;
 
 <div class="reference-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'designation')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'designation')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'contact_no')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'contact_no')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+            <div class="form-group">
+                <?= Html::submitButton('Add', ['class' => 'btn btn-success']) ?>
+            </div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
 
 </div>

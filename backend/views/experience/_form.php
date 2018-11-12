@@ -35,7 +35,9 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'responsibilities')->textarea(['rows' => 6]) ?>
 
-            <?= $form->field($model, 'currently_working')->checkbox(['class' => 'currently_working']); ?>
+            <?php $currently_working_class = ($model->currently_working) ? 'uncheck' :'check'?>
+
+            <?= $form->field($model, 'currently_working')->checkbox(['class' => "currently_working {$currently_working_class}"]); ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Add', ['class' => 'btn btn-success']) ?>
