@@ -10,19 +10,6 @@ $(document).ready(function () {
         // console.log($(this).val());
     })
 
-    $('.on_training').click(function () {
-
-        if($(this).val() == 1){
-            $('#training-year_to').prop('disabled', true);
-            $('.on_training').val(0);
-        } else {
-            $('#training-year_to').prop('disabled', false);
-            $('.on_training').val(1);
-        }
-
-    })
-
-
     function checkYearTo() {
 
         if($('.currently_working').hasClass('uncheck')){

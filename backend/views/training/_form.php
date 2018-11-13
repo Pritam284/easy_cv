@@ -37,7 +37,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'on_training')->checkbox(['class' => 'on_training']) ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('Add', ['class' => 'btn btn-success']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
@@ -49,7 +49,7 @@ use yii\widgets\ActiveForm;
 
 <?php
 
-$this->registerJsFile('@web/js/experience.js',[
+$this->registerJsFile('@web/js/training.js',[
 
         'depends' => [
             JqueryAsset::className()
