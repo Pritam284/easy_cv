@@ -112,7 +112,8 @@
                         <?php foreach ($user->educations as $education) { ?>
                         <div class="yui-u">
                             <h2><?= $education->institute ?></h2>
-                            <h3>Dual Major, Economics and English &mdash; <strong>4.0 GPA</strong> </h3>
+                            <h3><?php echo $education->year_from . ' to ' . $education->year_to; ?></h3>
+                            <h3><?php echo $education->degree . ' in ' . $education->subject; ?> &mdash; <strong><?= $education->result ?> GPA</strong> </h3>
                         </div>
 
                         <?php } ?>
@@ -124,7 +125,7 @@
         </div><!--// bd -->
 
         <div id="ft">
-            <p>Jonathan Doe &mdash; <a href="mailto:name@yourdomain.com">name@yourdomain.com</a> &mdash; (313) - 867-5309</p>
+            <p><?php echo $user->first_name . ' ' . $user->last_name ?> &mdash; <a href="mailto:<?= $personalData->email ?>"><?= $personalData->email ?></a> &mdash; <?= $personalData->contact_no ?></p>
         </div><!--// footer -->
 
     </div><!-- // inner -->

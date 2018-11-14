@@ -31,7 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'year_from',
                     'year_to',
                     'responsibilities:ntext',
-                    'currently_working',
+//                    'currently_working',
+                    [
+                            'format' => 'boolean',
+                            'attribute' => 'currently_working',
+                            'filter' => [0 => 'No', 1 => 'Yes'],
+                    ],
                 ],
             ]) ?>
         </div>
