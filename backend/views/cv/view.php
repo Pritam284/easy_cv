@@ -6,15 +6,16 @@
         <div id="hd">
             <div class="yui-gc">
                 <div class="yui-u first">
-                    <h1><?= $user->first_name ?></h1>
-                    <h2>Web Designer, Director</h2>
+                    <h1><?php echo $user->first_name. ' ' .$user->last_name ?></h1>
+                    <?php foreach ($user->personalDatas as $personalData){ ?>
+                        <h3><?= $personalData->email ?></h3>
+                        <h3><?= $personalData->contact_no ?></h3>
+                    <?php } ?>
                 </div>
 
                 <div class="yui-u">
                     <div class="contact-info">
                         <h3><a id="pdf" href="#">Download PDF</a></h3>
-                        <h3><a href="mailto:name@yourdomain.com">name@yourdomain.com</a></h3>
-                        <h3>(313) - 867-5309</h3>
                     </div><!--// .contact-info -->
                 </div>
             </div><!--// .yui-gc -->
@@ -41,20 +42,14 @@
                         </div>
                         <div class="yui-u">
 
-                            <div class="talent">
-                                <h2>Web Design</h2>
-                                <p>Assertively exploit wireless initiatives rather than synergistic core competencies.	</p>
-                            </div>
+                            <?php foreach ($user->skills as $skill) { ?>
 
                             <div class="talent">
-                                <h2>Interface Design</h2>
-                                <p>Credibly streamline mission-critical value with multifunctional functionalities.	 </p>
+                                <h2><?= $skill->name ?></h2>
+                                <p><b><?= $skill->level ?></b></p>
+                                <p><?= $skill->description ?></p>
                             </div>
-
-                            <div class="talent">
-                                <h2>Project Direction</h2>
-                                <p>Proven ability to lead and manage a wide variety of design and development projects in team and independent situations.</p>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div><!--// .yui-gf -->
 
@@ -91,34 +86,20 @@
 
                         <div class="yui-u">
 
-                            <div class="job">
-                                <h2>Facebook</h2>
-                                <h3>Senior Interface Designer</h3>
-                                <h4>2005-2007</h4>
-                                <p>Intrinsicly enable optimal core competencies through corporate relationships. Phosfluorescently implement worldwide vortals and client-focused imperatives. Conveniently initiate virtual paradigms and top-line convergence. </p>
-                            </div>
+                            <?php foreach ($user->experiences as $experience) { ?>
 
                             <div class="job">
-                                <h2>Apple Inc.</h2>
-                                <h3>Senior Interface Designer</h3>
-                                <h4>2005-2007</h4>
-                                <p>Progressively reconceptualize multifunctional "outside the box" thinking through inexpensive methods of empowerment. Compellingly morph extensive niche markets with mission-critical ideas. Phosfluorescently deliver bricks-and-clicks strategic theme areas rather than scalable benefits. </p>
+                                <h2><?= $experience->company_name ?></h2>
+                                <h3><?php echo $experience->designation . ',' . $experience->department ?></h3>
+                                <h4><?php if ($experience->currently_working == false){
+                                        echo $experience->year_from . ' to ' . $experience->year_to;
+                                    } else{
+                                        echo $experience->year_from . ' to Present';
+                                    } ?></h4>
+                                <p><?= $experience->responsibilities ?></p>
                             </div>
 
-                            <div class="job">
-                                <h2>Microsoft</h2>
-                                <h3>Principal and Creative Lead</h3>
-                                <h4>2004-2005</h4>
-                                <p>Intrinsicly transform flexible manufactured products without excellent intellectual capital. Energistically evisculate orthogonal architectures through covalent action items. Assertively incentivize sticky platforms without synergistic materials. </p>
-                            </div>
-
-
-                            <div class="job last">
-                                <h2>International Business Machines (IBM)</h2>
-                                <h3>Lead Web Designer</h3>
-                                <h4>2001-2004</h4>
-                                <p>Globally re-engineer cross-media schemas through viral methods of empowerment. Proactively grow long-term high-impact human capital and highly efficient innovation. Intrinsicly iterate excellent e-tailers with timely e-markets.</p>
-                            </div>
+                            <?php } ?>
 
                         </div><!--// .yui-u -->
                     </div><!--// .yui-gf -->
