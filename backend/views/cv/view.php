@@ -1,4 +1,11 @@
+<?php
 
+use yii\helpers\Html;
+use common\helpers\DateHelper;
+
+$this->title = '';
+
+?>
 
 <div id="doc2" class="yui-t7">
     <div id="inner">
@@ -92,9 +99,9 @@
                                 <h2><?= $experience->company_name ?></h2>
                                 <h3><?php echo $experience->designation . ',' . $experience->department ?></h3>
                                 <h4><?php if ($experience->currently_working == false){
-                                        echo $experience->year_from . ' to ' . $experience->year_to;
+                                        echo DateHelper::dateFormat($experience->year_from,'M Y') . ' - ' . DateHelper::dateFormat($experience->year_to,'M Y');
                                     } else{
-                                        echo $experience->year_from . ' to Present';
+                                        echo DateHelper::dateFormat($experience->year_from,'M Y') . ' - Present';
                                     } ?></h4>
                                 <p><?= $experience->responsibilities ?></p>
                             </div>
@@ -112,11 +119,12 @@
                         <?php foreach ($user->educations as $education) { ?>
                         <div class="yui-u">
                             <h2><?= $education->institute ?></h2>
-                            <h3><?php echo $education->year_from . ' to ' . $education->year_to; ?></h3>
+                            <h3><?php echo DateHelper::dateFormat($education->year_from, 'Y') . ' to ' . DateHelper::dateFormat($education->year_to, 'Y'); ?></h3>
                             <h3><?php echo $education->degree . ' in ' . $education->subject; ?> &mdash; <strong><?= $education->result ?> GPA</strong> </h3>
                         </div>
 
                         <?php } ?>
+
                     </div><!--// .yui-gf -->
 
 

@@ -7,6 +7,7 @@ use Yii;
 use common\models\db\PersonalData;
 use backend\models\search\PersonalDataSearch;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -50,13 +51,20 @@ class PersonalDataController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PersonalDataSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//        $searchModel = new PersonalDataSearch();
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//
+//        return $this->render('index', [
+//            'searchModel' => $searchModel,
+//            'dataProvider' => $dataProvider,
+//        ]);
+        $personalData = PersonalData::find()->where(['user_id' => Yii::$app->user->id])->one();
+        if ($personalData != null) {
+            return $this->redirect(['view','id' => $personalData->id,'user_id' => $personalData->user_id]);
+        }else{
+            return $this->redirect(['create']);
+        }
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
     }
 
     /**
@@ -91,9 +99,10 @@ class PersonalDataController extends Controller
 
             if ($model->validate()) {
 
-                $isSave= $model->photo->saveAs('uploads/' . $model->photo->baseName . time() . '.' . $model->photo->extension);
+                $path = 'uploads/' . str_replace(' ','_', $model->photo->baseName) . time() . '.' . $model->photo->extension;
+                $isSave= $model->photo->saveAs($path);
                 if($isSave){
-                    $model->photo = 'uploads/' . $model->photo->baseName . time() . '.' . $model->photo->extension;
+                    $model->photo = $path;
                 }
                 $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
