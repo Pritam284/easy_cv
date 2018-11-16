@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use common\helpers\DateHelper;
+use yii\helpers\Url;
 
 $this->title = '';
 
@@ -11,21 +12,17 @@ $this->title = '';
     <div id="inner">
 
         <div id="hd">
-            <div class="yui-gc">
-                <div class="yui-u first">
-                    <h1><?php echo $user->first_name. ' ' .$user->last_name ?></h1>
-                    <?php foreach ($user->personalDatas as $personalData){ ?>
-                        <h3><?= $personalData->email ?></h3>
-                        <h3><?= $personalData->contact_no ?></h3>
-                    <?php } ?>
-                </div>
 
-                <div class="yui-u">
-                    <div class="contact-info">
-                        <h3><a id="pdf" href="#">Download PDF</a></h3>
-                    </div><!--// .contact-info -->
-                </div>
-            </div><!--// .yui-gc -->
+            <h1><?php echo $user->first_name. ' ' .$user->last_name ?></h1>
+            <?php foreach ($user->personalDatas as $personalData){ ?>
+                <h3><?= $personalData->email ?></h3>
+                <h3><?= $personalData->contact_no ?></h3>
+            <?php } ?>
+            <?php $image = Url::base().'/'. $personalData->photo; ?>
+            <div id="hd right">
+                <img src="<?= $image  ?>"  align="right" height="230px" width="230px">
+                <a id="pdf" href="#">Download PDF</a> <br>
+            </div>
         </div><!--// hd -->
 
         <div id="bd">
