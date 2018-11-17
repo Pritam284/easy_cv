@@ -20,6 +20,7 @@ use Yii;
  * @property string $photo
  * @property string $email
  * @property string $contact_no
+ * @property string $career_objective
  *
  * @property User $user
  */
@@ -39,12 +40,12 @@ class PersonalData extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'father_name', 'mother_name', 'dob', 'gender', 'religion', 'country', 'marital_status', 'blood_group', 'email', 'contact_no'], 'required'],
+            [['user_id', 'father_name', 'mother_name', 'dob', 'gender', 'religion', 'country', 'marital_status', 'blood_group', 'email', 'contact_no', 'career_objective'], 'required'],
             [['user_id'], 'integer'],
             [['dob'], 'safe'],
             [['gender', 'marital_status', 'blood_group'], 'string'],
             [['father_name', 'mother_name', 'religion', 'country', 'contact_no'], 'string', 'max' => 50],
-            [['email'], 'string', 'max' => 255],
+            [['email', 'career_objective'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             ['email', 'email'],
             [['photo'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg']
@@ -70,6 +71,7 @@ class PersonalData extends \yii\db\ActiveRecord
             'photo' => 'Photo',
             'email' => 'Email',
             'contact_no' => 'Contact No',
+            'career_objective' => 'Career Objective',
         ];
     }
 

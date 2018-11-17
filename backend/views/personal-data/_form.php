@@ -51,6 +51,8 @@ use dosamigos\datepicker\DatePicker;
 
             <?= $form->field($model, 'contact_no')->textInput(['maxlength' => true]) ?>
 
+            <?= $form->field($model, 'career_objective')->textInput(['maxlength' => true]) ?>
+
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? 'Save' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>

@@ -14,19 +14,16 @@ $this->title = '';
         <div class="row">
             <div id="hd">
                 <p>
-                <div style="float: left">
-                    <h1><?php echo $user->first_name. ' ' .$user->last_name ?></h1>
-                    <?php foreach ($user->personalDatas as $personalData){ ?>
-                        <h3><?= $personalData->email ?></h3>
-                        <h3><?= $personalData->contact_no ?></h3>
-                    <?php } ?>
-                    <?php $image = Url::base().'/'. $personalData->photo; ?>
+                <h1><?php echo $user->first_name. ' ' .$user->last_name ?></h1>
+                <?php foreach ($user->personalDatas as $personalData){ ?>
+                    <h3><?= $personalData->email ?></h3>
+                    <h3><?= $personalData->contact_no ?></h3>
+                <?php } ?>
+                <?php $image = Url::base().'/'. $personalData->photo; ?>
+                <div style="text-align: right">
+                    <img src="<?= $image  ?>" height="230px" width="230px">
+                    <a id="pdf" href="#">Download PDF</a> <br>
                 </div>
-
-                    <div style="float: right">
-                        <a id="pdf" href="#">Download PDF</a>
-                        <img src="<?= $image  ?>" height="230px" width="230px">
-                    </div>
                 </p>
 
             </div><!--// hd -->

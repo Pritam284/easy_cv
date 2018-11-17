@@ -15,6 +15,7 @@ class CvController extends \yii\web\Controller
 //        print_r($user->personalDatas[0]->contact_no);
 //        die();
         return $this->render('view', ['user' => $user]);
+
     }
 
 }

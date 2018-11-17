@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                    'photo',
                     'email:email',
                     'contact_no',
+                    'career_objective',
                     ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}'],
                 ],
             ]); ?>
