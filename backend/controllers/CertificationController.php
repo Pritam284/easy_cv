@@ -50,10 +50,10 @@ class CertificationController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView()
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel(),
         ]);
     }
 
@@ -64,11 +64,17 @@ class CertificationController extends Controller
      */
     public function actionCreate()
     {
+        $certification = Certification::find()->where(['user_id' => Yii::$app->user->id])->one();
+
+        if($certification != null){
+            return $this->redirect(['update']);
+        }
+
         $model = new Certification();
         $model->user_id = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
+            return $this->redirect(['reference/create']);
         }
 
         return $this->render('create', [
@@ -83,12 +89,12 @@ class CertificationController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['reference/create']);
         }
 
         return $this->render('update', [
@@ -103,9 +109,9 @@ class CertificationController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $this->findModel($id)->delete();
+        $this->findModel()->delete();
 
         return $this->redirect(['index']);
     }
@@ -117,9 +123,9 @@ class CertificationController extends Controller
      * @return Certification the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel()
     {
-        if (($model = Certification::findOne($id)) !== null) {
+        if (($model = Certification::findOne(['user_id' => Yii::$app->user->id])) !== null) {
             return $model;
         }
 

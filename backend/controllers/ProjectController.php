@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use Codeception\Module\Yii1;
 use Yii;
 use common\models\db\Project;
 use backend\models\search\ProjectSearch;
@@ -50,10 +51,10 @@ class ProjectController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView()
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel(),
         ]);
     }
 
@@ -64,11 +65,17 @@ class ProjectController extends Controller
      */
     public function actionCreate()
     {
+        $project = Project::find()->where(['user_id' => Yii::$app->user->id])->one();
+
+        if($project != null){
+            return $this->redirect(['update']);
+        }
+
         $model = new Project();
         $model->user_id = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
+            return $this->redirect(['cv/view']);
         }
 
         return $this->render('create', [
@@ -83,12 +90,12 @@ class ProjectController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['cv/view']);
         }
 
         return $this->render('update', [
@@ -103,9 +110,9 @@ class ProjectController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $this->findModel($id)->delete();
+        $this->findModel()->delete();
 
         return $this->redirect(['index']);
     }
@@ -117,9 +124,9 @@ class ProjectController extends Controller
      * @return Project the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel()
     {
-        if (($model = Project::findOne($id)) !== null) {
+        if (($model = Project::findOne(['user_id' => Yii::$app->user->id])) !== null) {
             return $model;
         }
 
