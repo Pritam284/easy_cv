@@ -2,3 +2,12 @@
 
 
 /*.test { margin: 0; background: yellow; position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%) }*/
+
+form div.required label.control-label:after {
+    content:" * ";
+    color:red;
+    /*font-size: 25px;*/
+    /*position: absolute;*/
+    /*top: -5px;*/
+    /*right: -12px;*/
+}

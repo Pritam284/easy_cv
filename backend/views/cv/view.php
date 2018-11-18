@@ -83,36 +83,39 @@ $this->registerCssFile("@web/css/style.css");
     <h2 id="clock" class="sectionHead">Experience</h2>
     <!--EXPERIENCE-->
     <ul id="jobs">
+        <?php foreach ($user->experiences as $experience) { ?>
         <li>
             <div class="details">
                 <h3><?= $experience->company_name ?></h3>
                 <h4><?php echo $experience->designation . ', ' . $experience->department; ?></h4>
-                <h5>Jul 2008 - Present</h5>
+                <h5><?php if ($experience->currently_working == false){
+                        echo DateHelper::dateFormat($experience->year_from,'M Y') . ' - ' . DateHelper::dateFormat($experience->year_to,'M Y');
+                    } else{
+                        echo DateHelper::dateFormat($experience->year_from,'M Y') . ' - Present';
+                    }
+                    ?></h5>
             </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut justo nibh, mattis sit amet consequat a, varius vitae metus. Proin pharetra sodales pellentesque.</p>
+            <p><?= $experience->responsibilities; ?></p>
         </li>
+        <?php } ?>
     </ul>
     <!--end jobs--><!--EDUCATION TITLE-->
     <div class="clear"></div>
     <h2 id="learn" class="sectionHead">Education</h2>
     <!--EDUCATION-->
     <ul id="schools">
+        <?php foreach ($user->educations as $education) { ?>
         <li>
             <div class="details">
-                <h3>University of State</h3>
-                <h4>Degree Title - Concentration</h4>
-                <h5>2005 - 2007</h5>
+                <h3><?= $education->institute; ?></h3>
+                <h4><?php echo $education->degree . ' in ' . $education->subject; ?></h4>
+                <h5><?php echo DateHelper::dateFormat($education->year_from, 'Y') . ' - ' . DateHelper::dateFormat($education->year_to, 'Y') ?></h5>
+                <p><?php echo 'Result- ' . $education->result ?></p>
             </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut justo nibh, mattis sit amet consequat a, varius vitae metus. Proin pharetra sodales pellentesque.</p>
+
         </li>
-        <li>
-            <div class="details">
-                <h3>State University</h3>
-                <h4>Degree Title - Concentration</h4>
-                <h5>2001 - 2004</h5>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut justo nibh, mattis sit amet consequat a, varius vitae metus. Proin pharetra sodales pellentesque.</p>
-        </li>
+        <?php } ?>
+
     </ul>
     <!--end schooling-->
     <div class="clear"></div>

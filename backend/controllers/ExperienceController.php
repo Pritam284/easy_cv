@@ -50,10 +50,10 @@ class ExperienceController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView()
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel(),
         ]);
     }
 
@@ -65,15 +65,17 @@ class ExperienceController extends Controller
     public function actionCreate()
     {
 
+        $experience = Experience::find()->where(['user_id' => Yii::$app->user->id])->one();
+
+        if($experience != null){
+            return $this->redirect(['update']);
+        }
+
         $model = new Experience();
         $model->user_id = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            echo '<pre>';
-//            var_dump($model);
-//            die();
-
-            return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
+            return $this->redirect(['skill/create']);
         }
 
         return $this->render('create', [
@@ -88,12 +90,12 @@ class ExperienceController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['skill/create']);
         }
 
         return $this->render('update', [
@@ -122,9 +124,9 @@ class ExperienceController extends Controller
      * @return Experience the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel()
     {
-        if (($model = Experience::findOne($id)) !== null) {
+        if (($model = Experience::findOne(['user_id' => Yii::$app->user->id])) !== null) {
             return $model;
         }
 

@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\Html;
+
 $this->title = '';
 ?>
 <div class="site-index">
@@ -16,7 +18,10 @@ $this->title = '';
 
             <br>
 
-            <p><a class="btn btn-lg btn-primary" href="#">Create New CV</a> <a class="btn btn-lg btn-primary" href="cv/view" target="_blank">View CV</a></p>
+            <p>
+                <a class="btn btn-lg btn-primary" href="cv/view" target="_blank">View CV</a>
+                <?= Html::a("Create/Update CV", ["personal-data/create"], ["class" => "btn btn-lg btn-primary"]) ?>
+            </p>
 
             <p></p>
 

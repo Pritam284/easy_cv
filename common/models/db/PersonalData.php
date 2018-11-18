@@ -48,7 +48,8 @@ class PersonalData extends \yii\db\ActiveRecord
             [['email', 'career_objective'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             ['email', 'email'],
-            [['photo'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg']
+            [['photo'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'on' => 'insert'],
+            [['photo'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'on' => 'update'],
         ];
     }
 

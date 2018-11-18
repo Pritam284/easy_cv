@@ -60,7 +60,7 @@ class PersonalDataController extends Controller
 //        ]);
         $personalData = PersonalData::find()->where(['user_id' => Yii::$app->user->id])->one();
         if ($personalData != null) {
-            return $this->redirect(['view','id' => $personalData->id,'user_id' => $personalData->user_id]);
+            return $this->redirect(['view']);
         }else{
             return $this->redirect(['create']);
         }
@@ -74,10 +74,10 @@ class PersonalDataController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id, $user_id)
+    public function actionView()
     {
         return $this->render('view', [
-            'model' => $this->findModel($id, $user_id),
+            'model' => $this->findModel(),
         ]);
     }
 
@@ -88,6 +88,10 @@ class PersonalDataController extends Controller
      */
     public function actionCreate()
     {
+        $personalData = PersonalData::find()->where(['user_id' => Yii::$app->user->id])->one();
+        if ($personalData != null) {
+            return $this->redirect(['update']);
+        }
         $model = new PersonalData();
         $model->user_id = Yii::$app->user->id;
 
@@ -105,7 +109,7 @@ class PersonalDataController extends Controller
                     $model->photo = $path;
                 }
                 $model->save(false);
-                return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
+                return $this->redirect(['education/create']);
 
             }
         }
@@ -138,12 +142,12 @@ class PersonalDataController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id, $user_id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id, $user_id);
+        $model = $this->findModel();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
+            return $this->redirect(['education/create']);
         }
 
         return $this->render('update', [
@@ -176,9 +180,9 @@ class PersonalDataController extends Controller
      * @return PersonalData the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $user_id)
+    protected function findModel()
     {
-        if (($model = PersonalData::findOne(['id' => $id, 'user_id' => $user_id])) !== null) {
+        if (($model = PersonalData::findOne(['user_id' => Yii::$app->user->id])) !== null) {
             return $model;
         }
 

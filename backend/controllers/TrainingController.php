@@ -50,10 +50,10 @@ class TrainingController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView()
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel(),
         ]);
     }
 
@@ -64,11 +64,16 @@ class TrainingController extends Controller
      */
     public function actionCreate()
     {
+        $training = Training::find()->where(['user_id' => Yii::$app->user->id])->one();
+
+        if ($training != null){
+            return $this->redirect(['update']);
+        }
         $model = new Training();
         $model->user_id = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'user_id' => $model->user_id]);
+            return $this->redirect(['achievement/create']);
         }
 
         return $this->render('create', [
@@ -83,12 +88,12 @@ class TrainingController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['achievement/create']);
         }
 
         return $this->render('update', [
@@ -103,9 +108,9 @@ class TrainingController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $this->findModel($id)->delete();
+        $this->findModel()->delete();
 
         return $this->redirect(['index']);
     }
@@ -117,9 +122,9 @@ class TrainingController extends Controller
      * @return Training the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel()
     {
-        if (($model = Training::findOne($id)) !== null) {
+        if (($model = Training::findOne(['user_id' => Yii::$app->user->id])) !== null) {
             return $model;
         }
 
