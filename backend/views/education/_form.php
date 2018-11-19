@@ -1,12 +1,19 @@
 <?php
 
 use dosamigos\datepicker\DateRangePicker;
+use yii\bootstrap\Progress;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Education */
 /* @var $form yii\widgets\ActiveForm */
+
+echo Progress::widget([
+    'percent' => 20,
+    'options' => ['class' => 'progress-danger active progress-striped'],
+]);
+
 ?>
 
 <div class="education-form">

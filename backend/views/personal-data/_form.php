@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Progress;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
@@ -7,6 +8,12 @@ use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\db\PersonalData */
 /* @var $form yii\widgets\ActiveForm */
+
+echo Progress::widget([
+    'percent' => 10,
+    'options' => ['class' => 'progress-danger active progress-striped'],
+]);
+
 ?>
 
 <div class="personal-data-form">

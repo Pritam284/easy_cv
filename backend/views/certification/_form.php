@@ -1,8 +1,14 @@
 <?php
 
 use dosamigos\datepicker\DatePicker;
+use yii\bootstrap\Progress;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
+echo Progress::widget([
+    'percent' => 80,
+    'options' => ['class' => 'progress-danger active progress-striped'],
+]);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Certification */
