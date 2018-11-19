@@ -40,7 +40,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'currently_working')->checkbox(['class' => "currently_working {$currently_working_class}"]); ?>
 
             <div class="form-group">
-                <?= Html::submitButton('Add', ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton($model->isNewRecord ? 'Save' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
