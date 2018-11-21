@@ -2,6 +2,7 @@
 
 use yii\bootstrap\Progress;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 
@@ -53,6 +54,10 @@ echo Progress::widget([
             <?= $form->field($model, 'blood_group')->dropDownList([ 'A+' => 'A+', 'A-' => 'A-', 'B+' => 'B+', 'B-' => 'B-', 'O+' => 'O+', 'O-' => 'O-', 'AB+' => 'AB+', 'AB-' => 'AB-', ], ['prompt' => '']) ?>
 
             <?= $form->field($model, 'photo')->fileInput() ?>
+
+            <?php if($model->photo != null){ ?>
+            <img src="<?= Url::base(). '/' . $model->photo ?>" alt="Personal Photo" width="100" height="100">
+            <?php } ?> <br>
 
             <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 

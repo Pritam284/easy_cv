@@ -61,23 +61,25 @@ $this->registerCssFile("@web/css/style.css");
         <?php } ?>
     </div>
     <!--end bio-->
+
     <div class="clear"></div>
-    <!--SKILLS TITLE-->
-    <h2 id="tools" class="sectionHead">Skills</h2>
-    <!--SKILLS-->
-    <ul id="skills" class="ready">
-        <!--////////////////////////////////////////////////////////////////////////////////////--><!--Notice the class names indicate the % of your skills. i.e. s70 = 70%, s40 = 40% etc. --><!--////////////////////////////////////////////////////////////////////////////////////-->
-        <li id="skill1" class="s90" style="right: 0%;"><span style="display: inline;">WordPress Development</span></li>
-        <li id="skill2" class="s70" style="right: 0%;"><span style="display: inline;">PHP</span></li>
-        <li id="skill3" class="s100" style="right: 0%;"><span style="display: inline;">HTML + CSS</span></li>
-        <li id="skill4" class="s100" style="right: 0%;"><span style="display: inline;">jQuery</span></li>
-        <li id="skill5" class="s100" style="right: 0%;"><span style="display: inline;">Photoshop</span></li>
-        <li id="skill6" class="s90" style="right: 0%;"><span style="display: inline;">SEO</span></li>
-        <li id="skill7" class="s90" style="right: 0%;"><span style="display: inline;">User Interface Design</span></li>
-        <li id="skill8" class="s80" style="right: 0%;"><span style="display: inline;">Marketing</span></li>
-        <li id="skill9" class="s40" style="right: 0%;"><span style="display: inline;"><del>Underwater Basket Weaving</del></span></li>
+    <h2 id="learn" class="sectionHead">Education</h2>
+    <!--EDUCATION-->
+    <ul id="schools">
+        <?php foreach ($user->educations as $education) { ?>
+            <li>
+                <div class="details">
+                    <h3><?= $education->institute; ?></h3>
+                    <h4><?php echo $education->degree . ' in ' . $education->subject; ?></h4>
+                    <h5><?php echo DateHelper::dateFormat($education->year_from, 'Y') . ' - ' . DateHelper::dateFormat($education->year_to, 'Y') ?></h5>
+                    <p><?php echo 'Result- ' . $education->result ?></p>
+                </div>
+
+            </li>
+        <?php } ?>
+
     </ul>
-    <!--end skills-->
+
     <div class="clear"></div>
     <!--EXPERIENCE TITLE-->
     <h2 id="clock" class="sectionHead">Experience</h2>
@@ -99,37 +101,54 @@ $this->registerCssFile("@web/css/style.css");
         </li>
         <?php } ?>
     </ul>
-    <!--end jobs--><!--EDUCATION TITLE-->
+
     <div class="clear"></div>
-    <h2 id="learn" class="sectionHead">Education</h2>
-    <!--EDUCATION-->
-    <ul id="schools">
-        <?php foreach ($user->educations as $education) { ?>
-        <li>
-            <div class="details">
-                <h3><?= $education->institute; ?></h3>
-                <h4><?php echo $education->degree . ' in ' . $education->subject; ?></h4>
-                <h5><?php echo DateHelper::dateFormat($education->year_from, 'Y') . ' - ' . DateHelper::dateFormat($education->year_to, 'Y') ?></h5>
-                <p><?php echo 'Result- ' . $education->result ?></p>
-            </div>
-
-        </li>
-        <?php } ?>
-
+    <!--SKILLS TITLE-->
+    <h2 id="tools" class="sectionHead">Skills</h2>
+    <!--SKILLS-->
+    <ul id="skills" class="ready">
+        <!--////////////////////////////////////////////////////////////////////////////////////--><!--Notice the class names indicate the % of your skills. i.e. s70 = 70%, s40 = 40% etc. --><!--////////////////////////////////////////////////////////////////////////////////////-->
+        <li id="skill1" class="s90" style="right: 0%;"><span style="display: inline;">WordPress Development</span></li>
+        <li id="skill2" class="s70" style="right: 0%;"><span style="display: inline;">PHP</span></li>
+        <li id="skill3" class="s100" style="right: 0%;"><span style="display: inline;">HTML + CSS</span></li>
+        <li id="skill4" class="s100" style="right: 0%;"><span style="display: inline;">jQuery</span></li>
+        <li id="skill5" class="s100" style="right: 0%;"><span style="display: inline;">Photoshop</span></li>
+        <li id="skill6" class="s90" style="right: 0%;"><span style="display: inline;">SEO</span></li>
+        <li id="skill7" class="s90" style="right: 0%;"><span style="display: inline;">User Interface Design</span></li>
+        <li id="skill8" class="s80" style="right: 0%;"><span style="display: inline;">Marketing</span></li>
+        <li id="skill9" class="s40" style="right: 0%;"><span style="display: inline;"><del>Underwater Basket Weaving</del></span></li>
     </ul>
+
     <!--end schooling-->
     <div class="clear"></div>
     <!--HONORS / AWARDS TITLE-->
-    <h2 id="ribbon" class="sectionHead">Honors &amp; Awards</h2>
+    <h2 id="ribbon" class="sectionHead">Language</h2>
     <!--HONORS / AWARDS-->
-    <ul id="honorsAwards">
-        <li>Academy Award for Best Sound Design in a Bathroom</li>
-        <li>Emmy Award for Most Used Extra in a Drama</li>
-        <li>Grammy Award for Best Use of a Goat in a Soundtrack</li>
-        <li>S.A.G. Award for Touching the Ground</li>
-        <li>Presented with the Honor of Throwing Pies at Donald Trump</li>
-        <li>Featured in Dog &amp; Country Monthly (issue 298, pg. 20)</li>
-    </ul>
+    <div class="row">
+        <ul class="language">
+            <table>
+                <tr>
+                    <th> Name </th>
+                    <th> Level </th>
+                </tr>
+
+                <?php foreach ($user->languages as $language) { ?>
+                    <tr>
+                        <td>
+                            <?= $language->name ?>
+                        </td>
+
+                        <td>
+                            <?= $language->level ?>
+                        </td>
+                    </tr>
+
+                <?php } ?>
+
+            </table>
+        </ul>
+    </div>
+
     <!--end honorsAwards-->
     <div class="clear"></div>
     <!--AS SEEN ON TITLE-->
