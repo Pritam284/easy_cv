@@ -17,62 +17,62 @@ class StepsWidget extends Widget {
     public $steps = [
             [
                 'no' => 1,
-                'name' => 'Flight Info',
+                'name' => 'Personal Info',
                 'icon' => '<i class="fa fa-check"></i>',
-                'url' => '#'
+                'url' => 'personal-data/_form'
             ],
             [
                 'no' => 2,
-                'name' => 'Crew/PAX Info',
+                'name' => 'Education',
                 'icon' => '<i class="fa fa-check"></i>',
                 'url' => '#'
             ],
             [
                 'no' => 3,
-                'name' => 'Documents',
+                'name' => 'Experience',
                 'icon' => '<i class="fa fa-check"></i>',
                 'url' => '#step-3'
             ],
             [
                 'no' => 4,
-                'name' => 'Payment',
+                'name' => 'Skill',
                 'icon' => '<i class="fa fa-check"></i>',
                 'url' => '#'
             ],
             [
                 'no' => 5,
-                'name' => 'Complete',
+                'name' => 'Training',
                 'icon' => '<i class="fa fa-check"></i>',
                 'url' => '#'
             ],
 
             [
                 'no' => 6,
-                'name' => 'Flight Info',
+                'name' => 'Achievement',
                 'icon' => '<i class="fa fa-check"></i>',
                 'url' => '#'
             ],
             [
                 'no' => 7,
-                'name' => 'Crew/PAX Info',
+                'name' => 'Language',
                 'icon' => '<i class="fa fa-check"></i>',
                 'url' => '#'
             ],
             [
                 'no' => 8,
-                'name' => 'Documents',
+                'name' => 'Certification',
                 'icon' => '<i class="fa fa-check"></i>',
                 'url' => '#step-3'
             ],
             [
                 'no' => 9,
-                'name' => 'Payment',
+                'name' => 'Reference',
                 'icon' => '<i class="fa fa-check"></i>',
                 'url' => '#'
             ],
             [
                 'no' => 10,
-                'name' => 'Complete',
+                'name' => 'Project',
                 'icon' => '<i class="fa fa-check"></i>',
                 'url' => '#'
             ],

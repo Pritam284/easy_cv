@@ -5,7 +5,7 @@ use common\helpers\DateHelper;
 use yii\helpers\Url;
 use yii\web\JqueryAsset;
 
-$this->title = '';
+$this->title = 'Curriculum Vitae';
 
 $this->registerCssFile("@web/css/prettyPhoto.css");
 $this->registerCssFile("@web/css/print.css");
@@ -34,34 +34,41 @@ $this->registerCssFile("@web/css/style.css");
 
 
 <div id="wrapper" class="cv-scroll">
-    <!--BIO TITLE-->
-    <h2 id="titleName" class="sectionHead"><?php echo $user->first_name . ' ' . $user->last_name ?></h2>
-    <!--BIO-->
-    <div id="bio">
-        <?php foreach ($user->experiences as $experience) {
-            if ($experience->currently_working == true) {
-        ?>
-                <h2><?= $experience->designation ?></h2>
+
+    <div style="float: right">
         <?php
-           } else {
-         ?>
-                <h2><?= ' ' ?></h2>
-        <?php
-            }
+        foreach ($user->personalDatas as $personalData){
+            $image = Url::base().'/'. $personalData->photo;
         }
         ?>
-        <!--SOCIAL LINKS-->
-        <div id="socialIcons">
-            <a class="socialIcon" target="_blank" id="facebookIcon" href="http://themolitor.com/facebook"></a><a class="socialIcon" target="_blank" id="twitterIcon" href="http://themolitor.com/twitter"></a><a class="socialIcon" target="_blank" id="youTubeIcon" href="http://youtube.com/themolitor"></a><a class="socialIcon" target="_blank" id="gplusIcon" href="http://themolitor.com/gplus"></a><a class="socialIcon" target="_blank" id="dribbbleIcon" href="http://dribbble.com/themolitor"></a><!--MORE ICON OPTIOPS...<a class="socialIcon" target="_blank" id="flickrIcon" href="#>"></a><a class="socialIcon" target="_blank" id="vimeoIcon" href="#"></a><a class="socialIcon" target="_blank" id="mySpaceIcon" href="#"></a><a class="socialIcon" target="_blank" id="rssIcon" href="#"></a>-->
-        </div>
-        <!--end socialIcons--><!--BIO PARAGRAPH-->
-        <?php foreach ($user->personalDatas as $personalData){ ?>
-        <p>
-            <?= $personalData->career_objective ?>
-        </p>
-
-        <?php } ?>
+        <img src="<?= $image  ?>" height="200px" width="200px"; style=" display: block; margin-left: auto; margin-right: auto; filter: grayscale(100%)">
     </div>
+    <!--BIO TITLE-->
+    <h2 id="titleName" class="sectionHead"><?php echo $user->first_name . ' ' . $user->last_name ?></h2>
+        <div id="bio">
+            <?php foreach ($user->experiences as $experience) {
+                if ($experience->currently_working == true) {
+                    ?>
+                    <h2><?= $experience->designation ?></h2>
+                    <?php
+                } else {
+                    ?>
+                    <h2><?= ' ' ?></h2>
+                    <?php
+                }
+            }
+            ?>
+            <?php foreach ($user->personalDatas as $personalData){ ?>
+                <p>
+                    <?= $personalData->career_objective ?>
+                </p>
+
+            <?php } ?>
+        </div>
+
+
+    <!--BIO-->
+
     <!--end bio-->
 
     <div class="clear"></div>

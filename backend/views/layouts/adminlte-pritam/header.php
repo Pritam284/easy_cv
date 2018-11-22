@@ -1,6 +1,7 @@
 <?php
 use common\models\db\User;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -26,14 +27,21 @@ use yii\helpers\Html;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+
+                        <?php /* * ?>
+                        <?php foreach ($user->personalDatas as $personalData) {
+//                            $image = Url::base().'/'. $personalData->photo;
+                        ?>
+
+                        <img src="#" class="user-image" alt="User Image"/>
+                        <?php } ?>
+                        <?php /* */ ?>
                         <span class="hidden-xs"> <?php echo User::getLoggedInUserFullName(); ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
-                                 alt="User Image"/>
+                            <img src="#" class="user-image" alt="User Image"/>
 
                             <p>
                                 <?php echo User::getLoggedInUserFullName(); ?>

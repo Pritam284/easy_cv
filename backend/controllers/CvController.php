@@ -16,6 +16,8 @@ class CvController extends \yii\web\Controller
 //        die();
         return $this->render('view', ['user' => $user]);
 
+//        return $this->render('/layouts/adminlte-pritam/header', ['user' => $user]);
+
     }
 
 }

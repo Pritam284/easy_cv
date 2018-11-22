@@ -48,8 +48,8 @@
 //            var_dump($aClass);
         ?>
 
-        <li class="<?= $liClass ?>" style="max-width: 10%">
-            <a class="step <?= $aClass ?>" style="cursor: default;">
+        <li class="<?= $liClass ?>" style="max-width: 10%; background-color: #ffffff;">
+            <a class="step <?= $aClass ?>" style="cursor: default; ">
                 <span class="number"> <?= $step['no'] ?> </span>
                 <span class="desc">
                     <?= $step['icon'] ?> <?= $step['name'] ?>
