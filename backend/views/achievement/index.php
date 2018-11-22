@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="achievement-index">
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <h1><?= Html::encode($this->title) ?></h1>
             <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 

@@ -21,7 +21,7 @@ $this->registerCssFile("@web/css/style.css");
 
 </head>
 <body cz-shortcut-listen="true">
-
+<?php /**  *?>
 <div class="center-block">
     <?php
     foreach ($user->personalDatas as $personalData){
@@ -30,8 +30,10 @@ $this->registerCssFile("@web/css/style.css");
     ?>
     <img src="<?= $image  ?>" height="230px" width="200px"; style=" display: block; margin-left: auto; margin-right: auto; filter: grayscale(100%)">
 </div>
+<?php /**  */ ?>
 
-<div id="wrapper">
+
+<div id="wrapper" class="cv-scroll">
     <!--BIO TITLE-->
     <h2 id="titleName" class="sectionHead"><?php echo $user->first_name . ' ' . $user->last_name ?></h2>
     <!--BIO-->
@@ -235,9 +237,11 @@ $this->registerCssFile("@web/css/style.css");
     <p id="messageSent">Message sent. Thank you!</p>
     <div class="clear"></div>
 </div>
+<?php /**  * ?>
 <!--end wrapper--><!--COPYRIGHT-->
 <div id="copyright">© 2012 - Designed and developed by THE MOLITOR</div>
 <!--SCRIPTS-->
+<?php /**  */ ?>
 
 </body>
 </html>

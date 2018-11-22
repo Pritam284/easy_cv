@@ -30,3 +30,9 @@ form div.required label.control-label:after {
 .language th,td {
     padding: 15px;
 }
+
+.cv-scroll{
+    /*overflow:scroll; height:700px;*/
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}

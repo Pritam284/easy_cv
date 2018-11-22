@@ -1,5 +1,6 @@
 <?php
 
+use backend\widgets\cvCreateWidget\StepsWidget;
 use yii\bootstrap\Progress;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -10,10 +11,7 @@ use dosamigos\datepicker\DatePicker;
 /* @var $model common\models\db\PersonalData */
 /* @var $form yii\widgets\ActiveForm */
 
-echo Progress::widget([
-    'percent' => 10,
-    'options' => ['class' => 'progress-danger active progress-striped'],
-]);
+echo StepsWidget::widget(['currentStep' => 1]);
 
 ?>
 

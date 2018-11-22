@@ -1,13 +1,11 @@
 <?php
 
+use backend\widgets\cvCreateWidget\StepsWidget;
 use yii\bootstrap\Progress;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-echo Progress::widget([
-    'percent' => 40,
-    'options' => ['class' => 'progress-danger active progress-striped'],
-]);
+echo StepsWidget::widget(['currentStep' => 4]);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\db\Skill */
