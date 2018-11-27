@@ -166,8 +166,4 @@ class User extends \yii\db\ActiveRecord
         return $this->hasMany(Training::className(), ['user_id' => 'id']);
     }
 
-    public static function getLoggedInUserFullName()
-    {
-        return Yii::$app->user->identity->first_name .' '. Yii::$app->user->identity->last_name;
-    }
 }

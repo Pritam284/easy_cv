@@ -1,5 +1,6 @@
 <?php
 
+use backend\widgets\cvCreateWidget\StepsWidget;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */

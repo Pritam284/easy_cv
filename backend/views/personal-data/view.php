@@ -1,5 +1,6 @@
 <?php
 
+use common\helpers\UserHelper;
 use common\models\db\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -8,7 +9,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\db\PersonalData */
 
-$this->title = User::getLoggedInUserFullName();
+$this->title = UserHelper::getLoggedInUserFullName();
 $this->params['breadcrumbs'][] = ['label' => 'Personal Data', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

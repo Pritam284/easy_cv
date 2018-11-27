@@ -1,4 +1,5 @@
 <?php
+use common\helpers\UserHelper;
 use common\models\db\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -28,24 +29,22 @@ use yii\helpers\Url;
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-                        <?php /* * ?>
-                        <?php foreach ($user->personalDatas as $personalData) {
-//                            $image = Url::base().'/'. $personalData->photo;
-                        ?>
-
-                        <img src="#" class="user-image" alt="User Image"/>
-                        <?php } ?>
                         <?php /* */ ?>
-                        <span class="hidden-xs"> <?php echo User::getLoggedInUserFullName(); ?></span>
+                        <?php
+                              $photo = UserHelper::getLoggedInUserPhoto();
+
+                        ?>
+                        <img src="<?= $photo ?>" class="user-image" alt="User Image"/>
+
+                        <?php /* */ ?>
+                        <span class="hidden-xs"> <?php echo UserHelper::getLoggedInUserFullName(); ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="#" class="user-image" alt="User Image"/>
-
+                            <img src="<?= $photo ?>" class="img-circle" alt="User Image"/>
                             <p>
-                                <?php echo User::getLoggedInUserFullName(); ?>
-
+                                <?= UserHelper::getLoggedInUserFullName() ?>
                             </p>
                         </li>
 

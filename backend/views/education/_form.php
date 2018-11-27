@@ -2,6 +2,7 @@
 
 use backend\widgets\cvCreateWidget\StepsWidget;
 use dosamigos\datepicker\DateRangePicker;
+use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap\Progress;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -16,6 +17,7 @@ echo StepsWidget::widget(['currentStep' => 2]);
 
 <div class="education-form">
 
+    <?php /* */ ?>
     <div class="row">
         <div class="col-md-6">
             <?php $form = ActiveForm::begin(); ?>
@@ -46,6 +48,10 @@ echo StepsWidget::widget(['currentStep' => 2]);
             <?php ActiveForm::end(); ?>
         </div>
     </div>
+
+    <?php /* */ ?>
+
+
 
 
 

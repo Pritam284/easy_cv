@@ -20,4 +20,9 @@ class CvController extends \yii\web\Controller
 
     }
 
+    public function actionHeaderView(){
+        echo '<pre>';
+        print_r(Yii::$app->user->identity);
+    }
+
 }
