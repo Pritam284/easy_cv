@@ -70,15 +70,16 @@ class LanguageController extends Controller
             return $this->redirect(['update']);
         }
 
-        $model = new Language();
-        $model->user_id = Yii::$app->user->id;
+        $model = [new Language()];
+//        $model->user_id = Yii::$app->user->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['certification/create']);
-        }
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['certification/create']);
+//        }
 
         return $this->render('create', [
-            'model' => $model,
+//            'model' => (empty($model)) ? [new Language] : $model,
+            'model' => [new Language],
         ]);
     }
 
