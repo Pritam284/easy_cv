@@ -5,6 +5,9 @@ namespace backend\controllers;
 use Yii;
 use common\models\db\Language;
 use backend\models\search\LanguageSearch;
+use yii\base\Model;
+use yii\db\Exception;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,6 +23,18 @@ class LanguageController extends Controller
     public function behaviors()
     {
         return [
+
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -70,16 +85,46 @@ class LanguageController extends Controller
             return $this->redirect(['update']);
         }
 
-        $model = [new Language()];
+        $model = [new Language];
 //        $model->user_id = Yii::$app->user->id;
 
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            return $this->redirect(['certification/create']);
-//        }
+        if($model->load(Yii::$app->request->post())){
+            $model =Language::createMultiple(Language::className());
+            Language::loadMultiple($model, Yii::$app->request->post());
+
+            $valid = Language::validateMultiple($model);
+
+            if($valid){
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    if($flag = $model->save(false)){
+                        foreach ($model as $language){
+                            if(! ($flag = $language->save(false))){
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+
+                    if($flag){
+                        $transaction->commit();
+                        return $this->redirect(['certification/create']);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+        }
 
         return $this->render('create', [
+            'model' => (empty($model)) ? [new Language] : $model,
 //            'model' => (empty($model)) ? [new Language] : $model,
-            'model' => [new Language],
+//            'model' => [new Language],
         ]);
     }
 

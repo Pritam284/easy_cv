@@ -16,10 +16,7 @@ $this->title = 'Add Language';
     <h1><?= Html::encode($this->title) ?></h1>
     <?php /* */ ?>
 
-    <?php
-    print_r($model);
-    die();
-    ?>
+
 
     <?= $this->render('_form', [
         'model' => $model,
