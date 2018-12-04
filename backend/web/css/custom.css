@@ -17,19 +17,32 @@ form div.required label.control-label:after {
 }
 
 
-.language table, th, td {
-    width: 50%;
+.cv-data-table table, th, td {
+    width: inherit;
     border: 1px solid black;
     border-collapse: collapse;
 }
 
-.language th {
+.personal-data table{
+    width: 100%;
+    border: none;
+}
+.personal-data th,
+.personal-data td{
+    border: none;
+    border-collapse: collapse;
+
+}
+
+.personal-data-table, .cv-data-table th {
     text-transform: uppercase;
 }
 
-.language th,td {
+.cv-data-table th,td {
     padding: 15px;
 }
+
+
 
 .cv-scroll{
     /*overflow:scroll; height:700px;*/

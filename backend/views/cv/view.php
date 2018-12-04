@@ -58,6 +58,10 @@ $this->registerCssFile("@web/css/style.css");
                 }
             }
             ?>
+
+            <h2>Email: <?= $personalData->email ?></h2>
+            <h2>Mobile: <?= $personalData->contact_no ?></h2>
+
             <?php foreach ($user->personalDatas as $personalData){ ?>
                 <p>
                     <?= $personalData->career_objective ?>
@@ -72,7 +76,7 @@ $this->registerCssFile("@web/css/style.css");
     <!--end bio-->
 
     <div class="clear"></div>
-    <h2 id="learn" class="sectionHead">Education</h2>
+    <h2 id="learn" class="sectionHead">Educations</h2>
     <!--EDUCATION-->
     <ul id="schools">
         <?php foreach ($user->educations as $education) { ?>
@@ -91,7 +95,7 @@ $this->registerCssFile("@web/css/style.css");
 
     <div class="clear"></div>
     <!--EXPERIENCE TITLE-->
-    <h2 id="clock" class="sectionHead">Experience</h2>
+    <h2 id="clock" class="sectionHead">Experiences</h2>
     <!--EXPERIENCE-->
     <ul id="jobs">
         <?php foreach ($user->experiences as $experience) { ?>
@@ -131,10 +135,10 @@ $this->registerCssFile("@web/css/style.css");
     <!--end schooling-->
     <div class="clear"></div>
     <!--HONORS / AWARDS TITLE-->
-    <h2 id="ribbon" class="sectionHead">Language</h2>
+    <h2 id="ribbon" class="sectionHead">Languages</h2>
     <!--HONORS / AWARDS-->
     <div class="row">
-        <ul class="language">
+        <ul class="cv-data-table">
             <table>
                 <tr>
                     <th> Name </th>
@@ -158,102 +162,180 @@ $this->registerCssFile("@web/css/style.css");
         </ul>
     </div>
 
-    <!--end honorsAwards-->
-    <div class="clear"></div>
-    <!--AS SEEN ON TITLE-->
-    <h2 id="eye" class="sectionHead">As Seen On</h2>
-    <!--AS SEEN ON-->
 
-    <!--end seenOn-->
+
+    <?php if (!empty($user->certifications)) { ?>
+        <div class="clear"></div>
+        <!--HONORS / AWARDS TITLE-->
+        <h2 id="ribbon" class="sectionHead">Certifications</h2>
+        <!--HONORS / AWARDS-->
+        <div class="row">
+            <ul class="cv-data-table">
+                <table>
+                    <tr>
+                        <th> name </th>
+                        <th> authority </th>
+                        <th> year </th>
+                        <th> certificate No.</th>
+                    </tr>
+
+                    <?php foreach ($user->certifications as $certification) { ?>
+                        <th> <?= $certification->name ?></th>
+                        <th> <?= $certification->authority ?></th>
+                        <th> <?= $certification->year ?></th>
+                        <th> <?= $certification->certificate_no ?></th>
+                    <?php } ?>
+                </table>
+            </ul>
+        </div>
+
+    <?php } ?>
+
+    <?php if (!empty($user->trainings)) { ?>
+        <div class="clear"></div>
+        <!--EXPERIENCE TITLE-->
+        <h2 id="clock" class="sectionHead">Trainings</h2>
+
+        <div class="row">
+            <ul id="jobs">
+                <?php foreach ($user->trainings as $training) { ?>
+                    <li>
+                        <div class="details">
+                            <h3><?= $training->institute ?></h3>
+                            <h4><?= $training->name ?></h4>
+                            <h5><?php if ($training->on_training == false){
+                                    echo DateHelper::dateFormat($training->year_from,'M Y') . ' - ' . DateHelper::dateFormat($training->year_to,'M Y');
+                                } else{
+                                    echo DateHelper::dateFormat($training->year_from,'M Y') . ' - Present';
+                                }
+                                ?></h5>
+                        </div>
+                        <p><?= $training->description; ?></p>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+    <?php } ?>
+
+    <?php if (!empty($user->achievements)) { ?>
+        <div class="clear"></div>
+        <!--EXPERIENCE TITLE-->
+        <h2 id="clock" class="sectionHead">Achievements</h2>
+
+        <div class="row">
+            <ul id="jobs">
+                <?php foreach ($user->achievements as $achievement) { ?>
+                    <li>
+                        <div class="details">
+                            <h3><?= $achievement->authority ?></h3>
+                            <h4><?= $achievement->name ?></h4>
+                            <h5><?= DateHelper::dateFormat($achievement->year,'M Y') ?></h5>
+                        </div>
+                        <p><?= $achievement->description; ?></p>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+    <?php } ?>
+
+    <?php  ?>
     <div class="clear"></div>
-    <!--RECOMMENDATIONS TITLE-->
-    <h2 id="chat" class="sectionHead">Recommendations</h2>
-    <!--RECOMMENDATIONS-->
-    <ul id="recommends">
-        <li>
-            <h3>Current Company</h3>
-        </li>
-        <li>
-            <div class="details">
-                <h3>Tina Smith</h3>
-                <h4>Professional Position</h4>
-            </div>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut justo nibh, mattis sit amet consequat a, varius vitae metus. Proin pharetra sodales pellentesque."</p>
-        </li>
-        <li>
-            <div class="details">
-                <h3>Uncle Smith</h3>
-                <h4>Professional Position</h4>
-            </div>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut justo nibh, mattis sit amet consequat a, varius vitae metus. Proin pharetra sodales pellentesque."</p>
-        </li>
-        <li>
-            <h3>Some Other Company</h3>
-        </li>
-        <li>
-            <div class="details">
-                <h3>Justin Smith</h3>
-                <h4>Professional Position</h4>
-            </div>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut justo nibh, mattis sit amet consequat a, varius vitae metus. Proin pharetra sodales pellentesque."</p>
-        </li>
-        <li>
-            <div class="details">
-                <h3>Shawn Smith</h3>
-                <h4>Professional Position</h4>
-            </div>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut justo nibh, mattis sit amet consequat a, varius vitae metus. Proin pharetra sodales pellentesque."</p>
-        </li>
-        <li>
-            <h3>Another Company</h3>
-        </li>
-        <li>
-            <div class="details">
-                <h3>Matthew Smith</h3>
-                <h4>Professional Position</h4>
-            </div>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut justo nibh, mattis sit amet consequat a, varius vitae metus. Proin pharetra sodales pellentesque."</p>
-        </li>
-        <li>
-            <div class="details">
-                <h3>Rob Smith</h3>
-                <h4>Professional Position</h4>
-            </div>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut justo nibh, mattis sit amet consequat a, varius vitae metus. Proin pharetra sodales pellentesque."</p>
-        </li>
-    </ul>
-    <!--end recommends-->
-    <div class="clear"></div>
-    <!--CONTACT TITLE-->
-    <h2 id="contact" class="sectionHead">Contact Me</h2>
-    <!--CONTACT FORM-->
-    <div id="contactform" class="contact">
-        <form action="http://themolitor.com/applicant/send.php" method="post">
-            <div id="contactInfo">
-                <p> <label class="smallInput" for="name">Name <span class="required">*</span></label><br> <input type="text" name="name" id="name" value="" class="input round3"> </p>
-                <p> <label class="smallInput" for="email">Email <span class="required">*</span></label><br> <input type="text" name="email" id="email" value="" class="input round3"> </p>
-                <p> <label class="smallInput" for="phone">Phone</label><br> <input type="text" name="phone" id="phone" value="" class="input round3"> </p>
-            </div>
-            <p id="emailMessage"> <label class="smallInput" for="message">Message <span class="required">*</span></label><br> <textarea name="message" id="message" class="input round3"></textarea> </p>
-            <!-- EMAIL SUBJECT --> <input name="subject" id="subject" type="hidden" value="Resume Email Message"> <!-- YOUR EMAIL ADDRESS --> <input name="repemail" id="repemail" type="hidden" value="you@yourdomain.com"> <!-- ENTER YOUR URL BELOW: MUST CONTAIN #contact AT THE END OF THE URL--> <input name="pagelink" id="pagelink" type="hidden" value="http://www.themolitor.com/applicant#contact"> <input name="send" id="submit_btn" type="submit" class="round3 clearRight" value="Send Message"> <!--THE QUIZ-->
-            <div id="the-quiz" data-answer="103">100 + 3 = <span class="required">*</span> <input name="quiz" id="quiz" type="text" value=""></div>
-            <p id="required"><span class="required">*</span> <em>= Required field</em></p>
-        </form>
+    <h2 id="clock" class="sectionHead">Personal Information</h2>
+    <div class="row">
+        <div class="personal-data-table">
+            <table class="personal-data" style="width: 100%">
+                <tr>
+                    <th> Father's Name </th>
+                    <td> : </td>
+                    <td> <?= $personalData->father_name?></td>
+                </tr>
+
+                <tr>
+                    <th> Mother's Name </th>
+                    <td> : </td>
+                    <td> <?= $personalData->mother_name?></td>
+                </tr>
+
+                <tr>
+                    <th> Date of Birth </th>
+                    <td> : </td>
+                    <td> <?= DateHelper::dateFormat($personalData->dob, 'd M Y')?></td>
+                </tr>
+
+                <tr>
+                    <th> Gender </th>
+                    <td> : </td>
+                    <td> <?= $personalData->gender?></td>
+                </tr>
+
+                <tr>
+                    <th> Religion </th>
+                    <td> : </td>
+                    <td> <?= $personalData->religion?></td>
+                </tr>
+
+                <tr>
+                    <th> Country </th>
+                    <td> : </td>
+                    <td> <?= $personalData->country?></td>
+                </tr>
+
+                <tr>
+                    <th> Marital Status </th>
+                    <td> : </td>
+                    <td> <?= $personalData->marital_status ?></td>
+                </tr>
+
+                <tr>
+                    <th> Blood Group </th>
+                    <td> : </td>
+                    <td> <?= $personalData->blood_group ?></td>
+                </tr>
+
+            </table>
+        </div>
     </div>
-    <!--end contact form-->
-    <p id="messageSent">Message sent. Thank you!</p>
-    <div class="clear"></div>
-</div>
-<?php /**  * ?>
-<!--end wrapper--><!--COPYRIGHT-->
-<div id="copyright">© 2012 - Designed and developed by THE MOLITOR</div>
-<!--SCRIPTS-->
-<?php /**  */ ?>
 
+    <?php if (!empty($user->projects)) { ?>
+        <div class="clear"></div>
+        <!--EXPERIENCE TITLE-->
+        <h2 id="clock" class="sectionHead">Projects</h2>
+
+        <div class="row">
+            <div class="personal-data-table">
+                <?php foreach ($user->projects as $project) { ?>
+                    <table class="personal-data">
+                        <tr>
+                            <th style="width: 50%"> project name</th>
+                            <td> <b><?= $project->name ?></b></td>
+                        </tr>
+                        <tr>
+                            <th style="width: 50%"> </th>
+                            <td>  <p> <?= $project->description ?></p></td>
+                        </tr>
+                    </table>
+                <?php } ?>
+            </div>
+        </div>
+    <?php } ?>
+
+
+    <div class="clear"></div>
+    <h2 id="chat" class="sectionHead">References</h2>
+        <div class="row">
+            <?php foreach ($user->references as $reference) { ?>
+                <h4><?= $reference->name ?></h4>
+                <h5><?= $reference->designation ?></h5>
+                <p><?= $reference->email ?></p>
+                <p><?= $reference->contact_no ?></p>
+                <p><?= $reference->address ?></p>
+            <?php } ?>
+        </div>
+    <div class="clear"></div>
+
+</div>
 </body>
 </html>
-
-
 
 
 <?php
