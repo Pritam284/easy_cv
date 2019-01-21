@@ -150,7 +150,7 @@ class LanguageController extends Controller
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'model' => (empty($model)) ? [new Language] : [$model],
         ]);
     }
 

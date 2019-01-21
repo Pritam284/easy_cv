@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\MultiModel;
 use Yii;
 use common\models\db\Education;
 use backend\models\search\EducationSearch;
@@ -83,15 +84,20 @@ class EducationController extends Controller
             return $this->redirect(['update']);
         }
 
-        $model = new Education();
-        $model->user_id = Yii::$app->user->id;
+        $model = [new Education];
+//        $model->user_id = Yii::$app->user->id;
+//
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['experience/create']);
+//        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['experience/create']);
+        if(!empty(Yii::$app->request->post())) {
+            $models = MultiModel::createMultiple(Education::className());
+
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => (empty($model)) ? [new Education] : $model,
         ]);
     }
 
@@ -106,12 +112,13 @@ class EducationController extends Controller
     {
         $model = $this->findModel();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $models = MultiModel::createMultiple(Education::className());
             return $this->redirect(['experience/create']);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'model' => (empty($model)) ? [new Education] : [$model],
         ]);
     }
 

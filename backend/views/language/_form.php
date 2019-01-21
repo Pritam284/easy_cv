@@ -12,30 +12,6 @@ echo StepsWidget::widget(['currentStep' => 7]);
 /* @var $model common\models\db\Language */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<?php /* *?>
-
-<div class="language-form">
-
-    <div class="row">
-        <div class="col-md-6">
-            <?php $form = ActiveForm::begin(); ?>
-
-            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'level')->dropDownList([ 'native' => 'Native', 'intermediate' => 'Intermediate', 'expert' => 'Expert', ], ['prompt' => '']) ?>
-
-            <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? 'Save' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-            </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
-    </div>
-
-</div>
-
-<?php /* */?>
-
 
 <div class="language-form">
 
@@ -63,15 +39,15 @@ echo StepsWidget::widget(['currentStep' => 7]);
     ]); ?>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <i class="fa fa-envelope"></i> Address Book
-            <button type="button" class="pull-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add address</button>
+            <i class="fa fa-envelope"></i> Language
+            <button type="button" class="pull-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add Language</button>
             <div class="clearfix"></div>
         </div>
         <div class="panel-body container-items"><!-- widgetContainer -->
             <?php foreach ($model as $index => $modelLanguage): ?>
                 <div class="item panel panel-default"><!-- widgetBody -->
                     <div class="panel-heading">
-                        <span class="panel-title-address">Address: <?= ($index + 1) ?></span>
+                        <span class="panel-title-address">Language: <?= ($index + 1) ?></span>
                         <button type="button" class="pull-right remove-item btn btn-danger btn-xs"><i class="fa fa-minus"></i></button>
                         <div class="clearfix"></div>
                     </div>
@@ -89,7 +65,7 @@ echo StepsWidget::widget(['currentStep' => 7]);
                                 <?= $form->field($modelLanguage, "[{$index}]name")->textInput(['maxlength' => true]) ?>
                             </div>
                             <div class="col-sm-6">
-                                <?= $form->field($modelLanguage, "[{$index}]level")->textInput(['maxlength' => true]) ?>
+                                <?= $form->field($modelLanguage, "[{$index}]level")->dropDownList([ 'native' => 'Native', 'intermediate' => 'Intermediate', 'expert' => 'Expert', ], ['prompt' => '']) ?>
                             </div>
                         </div><!-- end:row -->
 
@@ -102,7 +78,7 @@ echo StepsWidget::widget(['currentStep' => 7]);
     <?php DynamicFormWidget::end(); ?>
 
     <div class="form-group">
-        <?= Html::submitButton($modelLanguage->isNewRecord ? 'Create' : 'Update', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton($modelLanguage->isNewRecord ? 'Add' : 'Update', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -113,13 +89,13 @@ echo StepsWidget::widget(['currentStep' => 7]);
     $js = '
     jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
         jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
-            jQuery(this).html("Address: " + (index + 1))
+            jQuery(this).html("Language: " + (index + 1))
         });
     });
     
     jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
         jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
-            jQuery(this).html("Address: " + (index + 1))
+            jQuery(this).html("Language: " + (index + 1))
         });
     });
     ';
