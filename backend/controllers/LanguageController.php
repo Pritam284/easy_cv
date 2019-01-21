@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\MultiModel;
 use Yii;
 use common\models\db\Language;
 use backend\models\search\LanguageSearch;
@@ -88,36 +89,41 @@ class LanguageController extends Controller
         $model = [new Language];
 //        $model->user_id = Yii::$app->user->id;
 
-        if($model->load(Yii::$app->request->post())){
-            $model =Language::createMultiple(Language::className());
-            Language::loadMultiple($model, Yii::$app->request->post());
+//        if($model->load(Yii::$app->request->post())){
+//            $model =Language::createMultiple(Language::className());
+//            Language::loadMultiple($model, Yii::$app->request->post());
+//
+//            $valid = Language::validateMultiple($model);
+//
+//            if($valid){
+//                $transaction = Yii::$app->db->beginTransaction();
+//
+//                try {
+//                    if($flag = $model->save(false)){
+//                        foreach ($model as $language){
+//                            if(! ($flag = $language->save(false))){
+//                                $transaction->rollBack();
+//                                break;
+//                            }
+//                        }
+//                    }
+//
+//                    if($flag){
+//                        $transaction->commit();
+//                        return $this->redirect(['certification/create']);
+//                    }
+//                } catch (Exception $e) {
+//                    $transaction->rollBack();
+//                }
+//            }
+//        }
+//
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//
+//        }
 
-            $valid = Language::validateMultiple($model);
-
-            if($valid){
-                $transaction = Yii::$app->db->beginTransaction();
-
-                try {
-                    if($flag = $model->save(false)){
-                        foreach ($model as $language){
-                            if(! ($flag = $language->save(false))){
-                                $transaction->rollBack();
-                                break;
-                            }
-                        }
-                    }
-
-                    if($flag){
-                        $transaction->commit();
-                        return $this->redirect(['certification/create']);
-                    }
-                } catch (Exception $e) {
-                    $transaction->rollBack();
-                }
-            }
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if(!empty(Yii::$app->request->post())) {
+            $models = MultiModel::createMultiple(Language::className());
 
         }
 

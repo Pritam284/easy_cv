@@ -147,12 +147,16 @@ class PersonalDataController extends Controller
         $model = $this->findModel();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->photo = UploadedFile::getInstance($model, 'photo');
-            $path = 'uploads/' . str_replace(' ','_', $model->photo->baseName) . time() . '.' . $model->photo->extension;
-            $isSave= $model->photo->saveAs($path);
-            if($isSave){
-                $model->photo = $path;
+            $newPhoto = UploadedFile::getInstance($model, 'photo');
+            if(!empty($newPhoto)) {
+                $model->photo = $newPhoto;
+                $path = 'uploads/' . str_replace(' ','_', $model->photo->baseName) . time() . '.' . $model->photo->extension;
+                $isSave= $model->photo->saveAs($path);
+                if($isSave){
+                    $model->photo = $path;
+                }
             }
+
             $model->save(false);
             return $this->redirect(['education/create']);
 

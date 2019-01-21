@@ -53,6 +53,16 @@ return [
                 ],
             ],
         ],
+        'assetManager' => [
+            'bundles' => [
+                'wbraganca\dynamicform\DynamicFormAsset' => [
+                    'sourcePath' => '@backend/web/js',
+                    'js' => [
+                        'yii2-dynamic-form.js'
+                    ],
+                ],
+            ],
+        ],
     ],
     'params' => $params,
 
