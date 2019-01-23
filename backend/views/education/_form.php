@@ -1,63 +1,4 @@
 <?php
-/* *
-if(!empty(Yii::$app->request->post())) {
-$models = MultiModel::createMultiple(MailingListRecipient::className());
-MultiModel::loadMultiple($models, Yii::$app->request->post());
-
-array_walk($models, function ($s_model) use ($id){
-$s_model->mailing_list_id = $id;
-$s_model->is_deleted = 0;
-$s_model->is_active = 1;
-});
-
-
-$valid = MultiModel::validateMultiple($models);
-
-if(!$valid){
-$errors = [];
-
-foreach ($models as $model){
-$errors[] = $model->getErrors();
-}
-
-LogHelper::save($errors, $models, 'mailing_list_recipient_create', false);
-
-} else {
-$transaction = Yii::$app->db->beginTransaction();
-
-    try {
-        $flag = false;
-
-        foreach ($models as $model) {
-            if (!($flag = $model->save(false))) {
-                $LogFile = LogHelper::save($model->getErrors(), $model, 'mailing_list_recipient_creation');
-                Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
-                $transaction->rollBack();
-                break;
-            }
-        }
-
-        if ($flag) {
-            $transaction->commit();
-            Yii::$app->session->setFlash('success', 'Successfully added.');
-            return $this->redirect(['mailing-list/view', 'id' => $id]);
-        }
-
-    } catch (Exception $e) {
-        $transaction->rollBack();
-        $LogFile = LogHelper::save($e->getMessage(), $e, 'mailing_list_recipient_create_exception');
-//                    ErrorHelper::throwE(500);
-        Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
-    }
-}
-
-//            die('asd');
-//            return $this->redirect(['view', 'id' => $model->id]);
-}
-/**/
-?>
-
-<?php
 
 use dosamigos\datepicker\DateRangePicker;
 use wbraganca\dynamicform\DynamicFormWidget;
@@ -67,9 +8,12 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\db\MailingListRecipient */
 /* @var $form yii\widgets\ActiveForm */
+
+$this->registerCssFile('@web/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css');
 ?>
 
 <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+
 
 <div class="mailing-list-recipient-form">
 
@@ -132,7 +76,7 @@ use yii\widgets\ActiveForm;
                                 <?= $form->field($modelEducation, "[{$index}]subject")->textInput() ?>
                             </div>
                             <div class="col-sm-6">
-                                <?= $form->field($modelEducation, "[{$index}]year_from")->textInput() ?>
+                                <?= $form->field($modelEducation, "[{$index}]year_from")->textInput(['class' => 'form-control datepicker']) ?>
                             </div>
                             <div class="col-sm-6">
                                 <?= $form->field($modelEducation, "[{$index}]year_to")->textInput() ?>
@@ -140,6 +84,10 @@ use yii\widgets\ActiveForm;
                             <div class="col-sm-6">
                                 <?= $form->field($modelEducation, "[{$index}]result")->textInput() ?>
                             </div>
+
+
+
+
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -147,46 +95,6 @@ use yii\widgets\ActiveForm;
 
 
         </div>
-
-
-        <?php /* * ?>
-        <table class="table table-striped table-bordered">
-            <thead>
-            <tr>
-                <th><?= $models[0]->getAttributeLabel('institute'); ?></th>
-                <th> </th>
-
-            </tr>
-            </thead>
-
-            <tbody class="container-items">
-            <?php foreach ($models as $i => $model): ?>
-                <tr class="item">
-                    <td>
-
-                        <?= $form->field($model, "[{$i}]institute")->textInput(['maxlength' => true])->label(false) ?>
-                        <?php if(!$model->isNewRecord){ ?>
-                            <?= $form->field($model, "[{$i}]id")->hiddenInput()->label(false) ?>
-                        <?php } ?>
-                    </td>
-
-                    <td class="text-center">
-                        <div class="remove_button" style="display: <?= $model->isNewRecord ? 'block' : 'none' ?>;">
-                            <button type="button" class="remove-item btn btn-danger"><i class="fa fa-minus"></i></button>
-                        </div>
-                    </td>
-
-                </tr>
-
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-
-
-        <span class="btn btn-success add-item form-control2">
-            <i class="glyphicon glyphicon-plus"></i> Add Row
-        </span>
-        <?php /* */ ?>
 
         <?php DynamicFormWidget::end(); ?>
     </div>
@@ -211,6 +119,7 @@ $js = '
         console.log(index + 1);
             jQuery(this).html("Education: " + (index + 1))
         });
+        $(\'.datepicker\').datepicker({});
     });
     
     jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
@@ -223,4 +132,18 @@ $js = '
 
 $this->registerJs($js);
 
+$script ='
+    $(\'.datepicker\').datepicker({});
+' ;
+
+$this->registerJs($script);
+
+$this->registerJsFile('@web/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
+    [
+            'depends' => [\yii\web\JqueryAsset::className()]
+    ]);
+
+
+
 ?>
+

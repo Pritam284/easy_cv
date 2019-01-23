@@ -7,6 +7,7 @@ use Yii;
 use common\models\db\Education;
 use backend\models\search\EducationSearch;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -167,12 +168,16 @@ class EducationController extends Controller
         $user_id = Yii::$app->user->id;
 
         if(!empty(Yii::$app->request->post())) {
-
+            $oldIDs = ArrayHelper::map($models, 'id', 'id');
             $models = MultiModel::createMultiple(Education::className(), $models);
             MultiModel::loadMultiple($models, Yii::$app->request->post());
-//            echo '<pre>';
-//            print_r($_POST);
-//            die();
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($models, 'id', 'id')));
+
+            echo '<pre>';
+            print_r($deletedIDs);
+            die();
+
+
 
             array_walk($models, function ($s_model) use ($user_id){
                 $s_model->user_id = $user_id;
@@ -196,6 +201,10 @@ class EducationController extends Controller
 
                 try {
                     $flag = false;
+
+                    if(!empty($deletedIDs)){
+                        Education::deleteAll(['id' => $deletedIDs]);
+                    }
 
                     foreach ($models as $model) {
                         if (!($flag = $model->save(false))) {
