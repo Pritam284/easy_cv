@@ -78,14 +78,14 @@ class EducationController extends Controller
      */
     public function actionCreate()
     {
-        $education = Education::find()->where(['user_id' => Yii::$app->user->id])->one() ;
+        $education = Education::find()->where(['user_id' => Yii::$app->user->id])->one();
 
         if($education != null) {
             return $this->redirect(['update']);
         }
 
-        $model = [new Education];
-//        $model->user_id = Yii::$app->user->id;
+        $models = [new Education];
+        $user_id = Yii::$app->user->id;
 //
 //        if ($model->load(Yii::$app->request->post()) && $model->save()) {
 //            return $this->redirect(['experience/create']);
@@ -93,11 +93,64 @@ class EducationController extends Controller
 
         if(!empty(Yii::$app->request->post())) {
             $models = MultiModel::createMultiple(Education::className());
+            MultiModel::loadMultiple($models, Yii::$app->request->post());
+
+            array_walk($models, function ($s_model) use ($user_id){
+                $s_model->user_id = $user_id;
+            });
+
+            $valid = MultiModel::validateMultiple($models);
+
+            if(!$valid){
+                $errors = [];
+
+                foreach ($models as $model){
+                    $errors[] = $model->getErrors();
+                }
+
+                echo "<pre>";
+                print_r($errors);
+                die();
+
+            } else {
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    $flag = false;
+
+                    foreach ($models as $model) {
+                        if (!($flag = $model->save(false))) {
+                            echo "<pre>";
+                            print_r($model->getErrors());
+                            die();
+//                            $LogFile = LogHelper::save($model->getErrors(), $model, 'mailing_list_recipient_creation');
+                            Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+                            $transaction->rollBack();
+                            break;
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+//                        Yii::$app->session->setFlash('success', 'Successfully added.');
+                        return $this->redirect(['experience/create']);
+                    }
+
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    echo "<pre>";
+                    print_r($e);
+                    die();
+//                    $LogFile = LogHelper::save($e->getMessage(), $e, 'mailing_list_recipient_create_exception');
+//                    ErrorHelper::throwE(500);
+//                    Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+                }
+            }
 
         }
 
         return $this->render('create', [
-            'model' => (empty($model)) ? [new Education] : $model,
+            'models' => (empty($models)) ? [new Education] : $models,
         ]);
     }
 

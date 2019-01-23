@@ -43,7 +43,7 @@ echo StepsWidget::widget(['currentStep' => 7]);
             <button type="button" class="pull-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add Language</button>
             <div class="clearfix"></div>
         </div>
-        <div class="panel-body container-items"><!-- widgetContainer -->
+        <div class="panel-body container-items dynamicform_wrapper"><!-- widgetContainer -->
             <?php foreach ($model as $index => $modelLanguage): ?>
                 <div class="item panel panel-default"><!-- widgetBody -->
                     <div class="panel-heading">
@@ -100,7 +100,7 @@ echo StepsWidget::widget(['currentStep' => 7]);
     });
     ';
 
-    $this->registerJs($js);
+//    $this->registerJs($js);
 
 ?>
 

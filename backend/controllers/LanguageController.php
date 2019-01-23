@@ -143,14 +143,15 @@ class LanguageController extends Controller
      */
     public function actionUpdate()
     {
-        $model = $this->findModel();
+        $models = $this->findModels();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['certification/create']);
-        }
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['certification/create']);
+//        }
 
         return $this->render('update', [
-            'model' => (empty($model)) ? [new Language] : [$model],
+//            'model' => (empty($model)) ? [new Language] : $model,
+            'models' => $models,
         ]);
     }
 
@@ -161,12 +162,12 @@ class LanguageController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete()
-    {
-        $this->findModel()->delete();
-
-        return $this->redirect(['index']);
-    }
+//    public function actionDelete()
+//    {
+//        $this->findModel()->delete();
+//
+//        return $this->redirect(['index']);
+//    }
 
     /**
      * Finds the Language model based on its primary key value.
@@ -175,9 +176,9 @@ class LanguageController extends Controller
      * @return Language the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel()
+    protected function findModels()
     {
-        if (($model = Language::findOne(['user_id' => Yii::$app->user->id])) !== null) {
+        if (($model = Language::findAll(['user_id' => Yii::$app->user->id])) !== null) {
             return $model;
         }
 

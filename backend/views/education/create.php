@@ -19,7 +19,7 @@ $this->title = 'Add Education';
     <?php /* */ ?>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'models' => $models,
     ]) ?>
 
 </div>

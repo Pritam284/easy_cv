@@ -59,6 +59,9 @@
         var $template = $(widgetOptions.template);
         $template.find('div[data-dynamicform]').each(function(){
             var widgetOptions = eval($(this).attr('data-dynamicform'));
+            // if(typeof widgetsOptions[i] !== 'undefined'){
+            //     identifiers[i] = $elem.closest(widgetsOptions[i].widgetItem).index();
+            // }
             if ($(widgetOptions.widgetItem).length > 1) {
                 var item = $(this).find(widgetOptions.widgetItem).first()[0].outerHTML;
                 $(this).find(widgetOptions.widgetBody).html(item);
@@ -208,6 +211,7 @@
                     });
 
                     widgetsOptions = widgetsOptions.reverse();
+                    console.log(widgetsOptions[i]);
                     for (var i = identifiers.length - 1; i >= 1; i--) {
                         identifiers[i] = $elem.closest(widgetsOptions[i].widgetItem).index();
                     }
