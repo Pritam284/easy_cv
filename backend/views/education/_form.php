@@ -109,6 +109,11 @@ use yii\widgets\ActiveForm;
 
             <div class="panel-body container-items"><!-- widgetContainer -->
                 <?php foreach ($models as $index => $modelEducation): ?>
+
+                    <?php if(!$modelEducation->isNewRecord){ ?>
+                        <?= $form->field($modelEducation, "[{$index}]id")->hiddenInput()->label(false) ?>
+                    <?php } ?>
+
                     <div class="item panel panel-default"><!-- widgetBody -->
                         <div class="panel-heading">
                             <span class="panel-title">Education: <?= ($index + 1) ?></span>

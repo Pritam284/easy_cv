@@ -41,6 +41,7 @@ class Education extends \yii\db\ActiveRecord
             [['institute'], 'string', 'max' => 150],
             [['degree', 'subject'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+//            ['id', 'safe'],
         ];
     }
 

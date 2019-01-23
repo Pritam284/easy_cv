@@ -124,7 +124,7 @@ class EducationController extends Controller
                             print_r($model->getErrors());
                             die();
 //                            $LogFile = LogHelper::save($model->getErrors(), $model, 'mailing_list_recipient_creation');
-                            Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+//                            Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
                             $transaction->rollBack();
                             break;
                         }
@@ -163,15 +163,74 @@ class EducationController extends Controller
      */
     public function actionUpdate()
     {
-        $model = $this->findModel();
+        $models = $this->findModels();
+        $user_id = Yii::$app->user->id;
 
-        if ($model->load(Yii::$app->request->post())) {
-            $models = MultiModel::createMultiple(Education::className());
+        if(!empty(Yii::$app->request->post())) {
+
+            $models = MultiModel::createMultiple(Education::className(), $models);
+            MultiModel::loadMultiple($models, Yii::$app->request->post());
+//            echo '<pre>';
+//            print_r($_POST);
+//            die();
+
+            array_walk($models, function ($s_model) use ($user_id){
+                $s_model->user_id = $user_id;
+            });
+
+            $valid = MultiModel::validateMultiple($models);
+
+            if(!$valid){
+                $errors = [];
+
+                foreach ($models as $model){
+                    $errors[] = $model->getErrors();
+                }
+
+                echo "<pre>";
+                print_r($errors);
+                die();
+
+            } else {
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    $flag = false;
+
+                    foreach ($models as $model) {
+                        if (!($flag = $model->save(false))) {
+                            echo "<pre>";
+                            print_r($model->getErrors());
+                            die();
+//                            $LogFile = LogHelper::save($model->getErrors(), $model, 'mailing_list_recipient_creation');
+//                            Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+                            $transaction->rollBack();
+                            break;
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+//                        Yii::$app->session->setFlash('success', 'Successfully added.');
+                        return $this->redirect(['experience/create']);
+                    }
+
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    echo "<pre>";
+                    print_r($e);
+                    die();
+//                    $LogFile = LogHelper::save($e->getMessage(), $e, 'mailing_list_recipient_create_exception');
+//                    ErrorHelper::throwE(500);
+//                    Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+                }
+            }
+
             return $this->redirect(['experience/create']);
         }
 
         return $this->render('update', [
-            'model' => (empty($model)) ? [new Education] : [$model],
+            'models' => $models,
         ]);
     }
 
@@ -196,10 +255,10 @@ class EducationController extends Controller
      * @return Education the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel()
+    protected function findModels()
     {
-        if (($model = Education::findOne(['user_id' => Yii::$app->user->id])) !== null) {
-            return $model;
+        if (($models = Education::findAll(['user_id' => Yii::$app->user->id])) !== null) {
+            return $models;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
