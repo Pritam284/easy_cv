@@ -9,6 +9,7 @@ use backend\models\search\LanguageSearch;
 use yii\base\Model;
 use yii\db\Exception;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -86,51 +87,70 @@ class LanguageController extends Controller
             return $this->redirect(['update']);
         }
 
-        $model = [new Language];
-//        $model->user_id = Yii::$app->user->id;
+        $models = [new Language];
+        $user_id = Yii::$app->user->id;
 
-//        if($model->load(Yii::$app->request->post())){
-//            $model =Language::createMultiple(Language::className());
-//            Language::loadMultiple($model, Yii::$app->request->post());
-//
-//            $valid = Language::validateMultiple($model);
-//
-//            if($valid){
-//                $transaction = Yii::$app->db->beginTransaction();
-//
-//                try {
-//                    if($flag = $model->save(false)){
-//                        foreach ($model as $language){
-//                            if(! ($flag = $language->save(false))){
-//                                $transaction->rollBack();
-//                                break;
-//                            }
-//                        }
-//                    }
-//
-//                    if($flag){
-//                        $transaction->commit();
-//                        return $this->redirect(['certification/create']);
-//                    }
-//                } catch (Exception $e) {
-//                    $transaction->rollBack();
-//                }
-//            }
-//        }
-//
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//
-//        }
-
-        if(!empty(Yii::$app->request->post())) {
+        if(!empty(Yii::$app->request->post())){
             $models = MultiModel::createMultiple(Language::className());
+            MultiModel::loadMultiple($models, Yii::$app->request->post());
+
+            array_walk($models, function ($s_model) use ($user_id){
+                $s_model->user_id = $user_id;
+            });
+
+            $valid = MultiModel::validateMultiple($models);
+
+            if(!$valid){
+                $errors = [];
+
+                foreach ($models as $model){
+                    $errors[] = $model->getErrors();
+                }
+
+                echo "<pre>";
+                print_r($errors);
+                die();
+
+            } else {
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    $flag = false;
+
+                    foreach ($models as $model) {
+                        if (!($flag = $model->save(false))) {
+                            echo "<pre>";
+                            print_r($model->getErrors());
+                            die();
+//                            $LogFile = LogHelper::save($model->getErrors(), $model, 'mailing_list_recipient_creation');
+//                            Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+                            $transaction->rollBack();
+                            break;
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+//                        Yii::$app->session->setFlash('success', 'Successfully added.');
+                        return $this->redirect(['certification/create']);
+                    }
+
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    echo "<pre>";
+                    print_r($e);
+                    die();
+//                    $LogFile = LogHelper::save($e->getMessage(), $e, 'mailing_list_recipient_create_exception');
+//                    ErrorHelper::throwE(500);
+//                    Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+                }
+            }
+
 
         }
 
         return $this->render('create', [
-            'model' => (empty($model)) ? [new Language] : $model,
-//            'model' => (empty($model)) ? [new Language] : $model,
-//            'model' => [new Language],
+            'models' => (empty($models)) ? [new Language] : $models,
         ]);
     }
 
@@ -144,11 +164,78 @@ class LanguageController extends Controller
     public function actionUpdate()
     {
         $models = $this->findModels();
+        $user_id = Yii::$app->user->id;
 
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            return $this->redirect(['certification/create']);
-//        }
+        if(!empty(Yii::$app->request->post())) {
+            $oldIDs = ArrayHelper::map($models, 'id', 'id');
+            $models = MultiModel::createMultiple(Language::className(), $models);
+            MultiModel::loadMultiple($models, Yii::$app->request->post());
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($models, 'id', 'id')));
+//
+//            echo '<pre>';
+//            print_r($deletedIDs);
+//            die();
 
+
+
+            array_walk($models, function ($s_model) use ($user_id){
+                $s_model->user_id = $user_id;
+            });
+
+            $valid = MultiModel::validateMultiple($models);
+
+            if(!$valid){
+                $errors = [];
+
+                foreach ($models as $model){
+                    $errors[] = $model->getErrors();
+                }
+
+                echo "<pre>";
+                print_r($errors);
+                die();
+
+            } else {
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    $flag = false;
+
+                    if(!empty($deletedIDs)){
+                        Language::deleteAll(['id' => $deletedIDs]);
+                    }
+
+                    foreach ($models as $model) {
+                        if (!($flag = $model->save(false))) {
+                            echo "<pre>";
+                            print_r($model->getErrors());
+                            die();
+//                            $LogFile = LogHelper::save($model->getErrors(), $model, 'mailing_list_recipient_creation');
+//                            Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+                            $transaction->rollBack();
+                            break;
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+//                        Yii::$app->session->setFlash('success', 'Successfully added.');
+                        return $this->redirect(['certification/create']);
+                    }
+
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    echo "<pre>";
+                    print_r($e);
+                    die();
+//                    $LogFile = LogHelper::save($e->getMessage(), $e, 'mailing_list_recipient_create_exception');
+//                    ErrorHelper::throwE(500);
+//                    Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+                }
+            }
+
+            return $this->redirect(['certification/create']);
+        }
         return $this->render('update', [
 //            'model' => (empty($model)) ? [new Language] : $model,
             'models' => $models,
@@ -178,8 +265,8 @@ class LanguageController extends Controller
      */
     protected function findModels()
     {
-        if (($model = Language::findAll(['user_id' => Yii::$app->user->id])) !== null) {
-            return $model;
+        if (($models = Language::findAll(['user_id' => Yii::$app->user->id])) !== null) {
+            return $models;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');

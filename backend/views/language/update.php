@@ -18,7 +18,7 @@ $this->title = 'Update Language';
     <?php /* */ ?>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'models' => $models,
     ]) ?>
 
 </div>
