@@ -59,13 +59,13 @@
         var $template = $(widgetOptions.template);
         $template.find('div[data-dynamicform]').each(function(){
             var widgetOptions = eval($(this).attr('data-dynamicform'));
-            // if(typeof widgetsOptions[i] !== 'undefined'){
-            //     identifiers[i] = $elem.closest(widgetsOptions[i].widgetItem).index();
-            // }
-            if ($(widgetOptions.widgetItem).length > 1) {
-                var item = $(this).find(widgetOptions.widgetItem).first()[0].outerHTML;
-                $(this).find(widgetOptions.widgetBody).html(item);
+            if(typeof widgetsOptions[i] !== 'undefined'){
+                identifiers[i] = $elem.closest(widgetsOptions[i].widgetItem).index();
             }
+            // if ($(widgetOptions.widgetItem).length > 1) {
+            //     var item = $(this).find(widgetOptions.widgetItem).first()[0].outerHTML;
+            //     $(this).find(widgetOptions.widgetBody).html(item);
+            // }
         });
 
         $template.find('input, textarea, select').each(function() {
@@ -90,6 +90,8 @@
 
         // remove "error/success" css class
         var yiiActiveFormData = $('#' + widgetOptions.formId).yiiActiveForm('data');
+        // alert($('#' + widgetOptions.formId).length);
+        // alert(yiiActiveFormData);
         $template.find('.' + yiiActiveFormData.settings.errorCssClass).removeClass(yiiActiveFormData.settings.errorCssClass);
         $template.find('.' + yiiActiveFormData.settings.successCssClass).removeClass(yiiActiveFormData.settings.successCssClass);
 

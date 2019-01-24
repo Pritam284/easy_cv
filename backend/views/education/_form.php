@@ -119,6 +119,11 @@ $js = '
         console.log(index + 1);
             jQuery(this).html("Education: " + (index + 1))
         });
+        $(".dynamicform_wrapper .item:last-child input, .dynamicform_wrapper .item:last-child textarea, .dynamicform_wrapper .item:last-child select").val("");
+//        $(".dynamicform_wrapper .item:last-child .form-group").css("background", "#f00");
+        sleep(500);
+        $(".dynamicform_wrapper .item:last-child .form-group").removeClass("has-error");
+        $(".dynamicform_wrapper .item:last-child .form-group .help-block").html("");
         $(\'.datepicker\').datepicker({});
     });
     
@@ -144,6 +149,9 @@ $this->registerJsFile('@web/lib/bootstrap-datepicker/js/bootstrap-datepicker.min
     ]);
 
 
+$this->registerJs("
+    console.log($('#dynamic-form').data('yiiActiveForm').attributes);
+", yii\web\View::POS_LOAD);
 
 ?>
 
