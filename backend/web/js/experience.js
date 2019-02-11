@@ -2,25 +2,30 @@
  * Created by mac on 11/11/18.
  */
 $(document).ready(function () {
-    checkYearTo();
 
-    $('.currently_working').click(function () {
+    $(".dynamicform_wrapper .currently_working").each(function () {
+        checkYearTo($(this));
+    });
+    // checkYearTo();
 
-        checkYearTo();
-        // console.log($(this).val());
-    })
 
-    function checkYearTo() {
 
-        if($('.currently_working').hasClass('uncheck')){
-            $('#experience-year_to').prop('disabled',true);
-            $('.currently_working').removeClass('uncheck');
-            $('.currently_working').addClass('check');
+    $(".dynamicform_wrapper").on('change', '.currently_working', function() {
+        checkYearTo($(this))
+    });
 
-        } else if($('.currently_working').hasClass('check')) {
-            $('#experience-year_to').prop('disabled',false);
-            $('.currently_working').addClass('uncheck');
-            $('.currently_working').removeClass('check');
+    function checkYearTo(currentlyWorking) {
+        var ischecked = currentlyWorking.hasClass('uncheck');
+        var item = currentlyWorking.closest(".item");
+        if(ischecked){
+            $(".year-to", item).prop('disabled',true);
+            $(".year-to", item).prop('value',"");
+            currentlyWorking.removeClass('uncheck');
+            currentlyWorking.addClass('check');
+        }else{
+            $(".year-to", item).prop('disabled',false);
+            currentlyWorking.addClass('uncheck');
+            currentlyWorking.removeClass('check');
         }
 
     }

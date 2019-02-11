@@ -173,11 +173,6 @@ class EducationController extends Controller
             MultiModel::loadMultiple($models, Yii::$app->request->post());
             $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($models, 'id', 'id')));
 
-            echo '<pre>';
-            print_r($deletedIDs);
-            die();
-
-
 
             array_walk($models, function ($s_model) use ($user_id){
                 $s_model->user_id = $user_id;

@@ -17,7 +17,7 @@ $this->title = 'Add Experience';
     <?php /* */ ?>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'models' => $models,
     ]) ?>
 
 </div>

@@ -17,7 +17,7 @@ $this->title = 'Update Experience';
     <?php /* */ ?>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'models' => $models,
     ]) ?>
 
 </div>

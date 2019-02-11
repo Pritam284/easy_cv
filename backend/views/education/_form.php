@@ -36,6 +36,7 @@ $this->registerCssFile('@web/lib/bootstrap-datepicker/css/bootstrap-datepicker.m
                 'degree',
                 'subject',
                 'year_from',
+                'year_to',
                 'result',
 //            'is_active',
             ],
@@ -46,7 +47,7 @@ $this->registerCssFile('@web/lib/bootstrap-datepicker/css/bootstrap-datepicker.m
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-envelope"></i> Education
+                <i class="fa fa-envelope"></i> Educations
                 <button type="button" class="pull-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add Education</button>
                 <div class="clearfix"></div>
             </div>
@@ -54,9 +55,7 @@ $this->registerCssFile('@web/lib/bootstrap-datepicker/css/bootstrap-datepicker.m
             <div class="panel-body container-items"><!-- widgetContainer -->
                 <?php foreach ($models as $index => $modelEducation): ?>
 
-                    <?php if(!$modelEducation->isNewRecord){ ?>
-                        <?= $form->field($modelEducation, "[{$index}]id")->hiddenInput()->label(false) ?>
-                    <?php } ?>
+
 
                     <div class="item panel panel-default"><!-- widgetBody -->
                         <div class="panel-heading">
@@ -64,6 +63,10 @@ $this->registerCssFile('@web/lib/bootstrap-datepicker/css/bootstrap-datepicker.m
                             <button type="button" class="pull-right remove-item btn btn-danger btn-xs"><i class="fa fa-minus"></i></button>
                             <div class="clearfix"></div>
                         </div>
+
+                        <?php if(!$modelEducation->isNewRecord){ ?>
+                            <?= $form->field($modelEducation, "[{$index}]id")->hiddenInput()->label(false) ?>
+                        <?php } ?>
 
                         <div class="panel-body">
                             <div class="col-sm-6">
@@ -79,7 +82,7 @@ $this->registerCssFile('@web/lib/bootstrap-datepicker/css/bootstrap-datepicker.m
                                 <?= $form->field($modelEducation, "[{$index}]year_from")->textInput(['class' => 'form-control datepicker']) ?>
                             </div>
                             <div class="col-sm-6">
-                                <?= $form->field($modelEducation, "[{$index}]year_to")->textInput() ?>
+                                <?= $form->field($modelEducation, "[{$index}]year_to")->textInput(['class' => 'form-control datepicker']) ?>
                             </div>
                             <div class="col-sm-6">
                                 <?= $form->field($modelEducation, "[{$index}]result")->textInput() ?>
@@ -121,10 +124,14 @@ $js = '
         });
         $(".dynamicform_wrapper .item:last-child input, .dynamicform_wrapper .item:last-child textarea, .dynamicform_wrapper .item:last-child select").val("");
 //        $(".dynamicform_wrapper .item:last-child .form-group").css("background", "#f00");
+          $(\'.datepicker\').each(function() {
+            $(this).datepicker();
+        });  
         sleep(500);
         $(".dynamicform_wrapper .item:last-child .form-group").removeClass("has-error");
         $(".dynamicform_wrapper .item:last-child .form-group .help-block").html("");
-        $(\'.datepicker\').datepicker({});
+        console.log($(\'.datepicker\').length);
+        
     });
     
     jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {

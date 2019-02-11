@@ -2,10 +2,13 @@
 
 namespace backend\controllers;
 
+use common\models\MultiModel;
 use Yii;
 use common\models\db\Experience;
 use backend\models\search\ExperienceSearch;
+use yii\db\Exception;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -84,15 +87,65 @@ class ExperienceController extends Controller
             return $this->redirect(['update']);
         }
 
-        $model = new Experience();
-        $model->user_id = Yii::$app->user->id;
+        $models = [new Experience];
+        $user_id = Yii::$app->user->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['skill/create']);
+        if(!empty(Yii::$app->request->post())){
+            $models = MultiModel::createMultiple(Experience::className());
+            MultiModel::loadMultiple($models, Yii::$app->request->post());
+
+//            echo "<pre>";
+//            print_r($models);
+//            die();
+
+            array_walk($models, function ($s_model) use ($user_id){
+               $s_model->user_id = $user_id;
+            });
+
+            $valid = MultiModel::validateMultiple($models);
+
+            if(!$valid){
+                $error = [];
+
+                foreach ($models as $model){
+                    $error[] = $model->getErrors();
+                }
+
+//                echo "<pre>";
+//                print_r($errors);
+//                die();
+            } else {
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    $flag = false;
+
+                    foreach ($models as $model){
+                        if (!($flag = $model->save(false))){
+                            echo "<pre>";
+                            print_r($model->getErrors());
+                            die();
+
+                            $transaction->rollBack();
+                            break;
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['skill/create']);
+                    }
+                } catch (Exception $e){
+                    $transaction->rollBack();
+                    echo "<pre>";
+                    print_r($e);
+                    die();
+                }
+            }
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'models' => (empty($models)) ? [new Experience] : $models,
         ]);
     }
 
@@ -105,14 +158,77 @@ class ExperienceController extends Controller
      */
     public function actionUpdate()
     {
-        $model = $this->findModel();
+        $models = $this->findModels();
+        $user_id = Yii::$app->user->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if(!empty(Yii::$app->request->post())) {
+            $oldIDs = ArrayHelper::map($models, 'id', 'id');
+            $models = MultiModel::createMultiple(Experience::className(), $models);
+            MultiModel::loadMultiple($models, Yii::$app->request->post());
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($models, 'id', 'id')));
+
+
+            array_walk($models, function ($s_model) use ($user_id){
+                $s_model->user_id = $user_id;
+            });
+
+            $valid = MultiModel::validateMultiple($models);
+
+            if(!$valid){
+                $errors = [];
+
+                foreach ($models as $model){
+                    $errors[] = $model->getErrors();
+                }
+
+                echo "<pre>";
+                print_r($errors);
+                die();
+
+            } else {
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    $flag = false;
+
+                    if(!empty($deletedIDs)){
+                        Experience::deleteAll(['id' => $deletedIDs]);
+                    }
+
+                    foreach ($models as $model) {
+                        if (!($flag = $model->save(false))) {
+                            echo "<pre>";
+                            print_r($model->getErrors());
+                            die();
+//                            $LogFile = LogHelper::save($model->getErrors(), $model, 'mailing_list_recipient_creation');
+//                            Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+                            $transaction->rollBack();
+                            break;
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+//                        Yii::$app->session->setFlash('success', 'Successfully added.');
+                        return $this->redirect(['skill/create']);
+                    }
+
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    echo "<pre>";
+                    print_r($e);
+                    die();
+//                    $LogFile = LogHelper::save($e->getMessage(), $e, 'mailing_list_recipient_create_exception');
+//                    ErrorHelper::throwE(500);
+//                    Yii::$app->session->setFlash('error', "Error Creating Mailing List Recipient. [ERR_{$LogFile}]");
+                }
+            }
+
             return $this->redirect(['skill/create']);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'models' => $models,
         ]);
     }
 
@@ -137,10 +253,10 @@ class ExperienceController extends Controller
      * @return Experience the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel()
+    protected function findModels()
     {
-        if (($model = Experience::findOne(['user_id' => Yii::$app->user->id])) !== null) {
-            return $model;
+        if (($models = Experience::findAll(['user_id' => Yii::$app->user->id])) !== null) {
+            return $models;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
