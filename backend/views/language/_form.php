@@ -29,7 +29,7 @@ echo StepsWidget::widget(['currentStep' => 7]);
         'min' => 0, // 0 or 1 (default 1)
         'insertButton' => '.add-item', // css class
         'deleteButton' => '.remove-item', // css class
-        'model' => $model[0],
+        'model' => $models[0],
         'formId' => 'dynamic-form',
         'formFields' => [
             'name',
@@ -44,7 +44,7 @@ echo StepsWidget::widget(['currentStep' => 7]);
             <div class="clearfix"></div>
         </div>
         <div class="panel-body container-items dynamicform_wrapper"><!-- widgetContainer -->
-            <?php foreach ($model as $index => $modelLanguage): ?>
+            <?php foreach ($models as $index => $modelLanguage): ?>
                 <div class="item panel panel-default"><!-- widgetBody -->
                     <div class="panel-heading">
                         <span class="panel-title-address">Language: <?= ($index + 1) ?></span>
@@ -87,15 +87,26 @@ echo StepsWidget::widget(['currentStep' => 7]);
 
 <?php
     $js = '
-    jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
-        jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
+     jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
+//    alert(1);
+           console.log(item);
+           console.log(jQuery(".dynamicform_wrapper .item").length);
+        jQuery(".dynamicform_wrapper .item .panel-title").each(function(index) {
+        console.log(index + 1);
             jQuery(this).html("Language: " + (index + 1))
         });
+        $(".dynamicform_wrapper .item:last-child input, .dynamicform_wrapper .item:last-child textarea, .dynamicform_wrapper .item:last-child select").val("");
+//        $(".dynamicform_wrapper .item:last-child .form-group").css("background", "#f00");
+        sleep(500);
+        $(".dynamicform_wrapper .item:last-child .form-group").removeClass("has-error");
+        $(".dynamicform_wrapper .item:last-child .form-group .help-block").html("");
+        
     });
     
     jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
-        jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
-            jQuery(this).html("Language: " + (index + 1))
+//    alert(2);
+        jQuery(".dynamicform_wrapper .item .panel-title").each(function(index) {
+            jQuery(this).html("Education: " + (index + 1))
         });
     });
     ';

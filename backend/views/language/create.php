@@ -19,7 +19,7 @@ $this->title = 'Add Language';
 
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'models' => $models,
     ]) ?>
 
 </div>
