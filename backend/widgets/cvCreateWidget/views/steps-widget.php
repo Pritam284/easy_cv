@@ -49,7 +49,7 @@
         ?>
 
         <li class="<?= $liClass ?>" style="max-width: 10%; background-color: #ffffff;">
-            <a class="step <?= $aClass ?>" style="cursor: default; ">
+            <a class="step <?= $aClass ?>" style="cursor: default; " href="<?= $step['url'] ?>">
                 <span class="number"> <?= $step['no'] ?> </span>
                 <span class="desc">
                     <?= $step['icon'] ?> <?= $step['name'] ?>

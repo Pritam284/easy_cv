@@ -1,5 +1,6 @@
 <?php
 
+use backend\widgets\cvCreateWidget\StepsWidget;
 use dosamigos\datepicker\DateRangePicker;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\helpers\Html;
@@ -10,6 +11,8 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 $this->registerCssFile('@web/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css');
+
+echo StepsWidget::widget(['currentStep' => 2]);
 ?>
 
 <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>

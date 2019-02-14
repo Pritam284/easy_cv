@@ -16,49 +16,6 @@ echo StepsWidget::widget(['currentStep' => 3]);
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<?php /* * ?>
-<div class="experience-form">
-
-    <div class="row">
-        <div class="col-md-6">
-            <?php $form = ActiveForm::begin(); ?>
-
-            <?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'designation')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'department')->textInput(['maxlength' => true]) ?>
-
-            <?= $form->field($model, 'year_from')->textInput()->widget(DateRangePicker::className(), [
-                'attributeTo' => 'year_to',
-                'form' => $form, // best for correct client validation
-                'language' => 'en',
-                'size' => 'lg',
-                'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy-mm-dd'
-                ]
-            ])->label('Duration'); ?>
-
-            <?= $form->field($model, 'responsibilities')->textarea(['rows' => 6]) ?>
-
-            <?php $currently_working_class = ($model->currently_working) ? 'uncheck' :'check'?>
-
-            <?= $form->field($model, 'currently_working')->checkbox(['class' => "currently_working {$currently_working_class}"]); ?>
-
-            <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? 'Save' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-
-            </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
-    </div>
-
-</div>
-
-<?php /* */ ?>
-
 <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
 
@@ -176,9 +133,9 @@ echo StepsWidget::widget(['currentStep' => 3]);
         <?= Html::submitButton($models[0]->isNewRecord ? 'Create' : 'Update', ['class' => 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
-
 </div>
+
+<?php ActiveForm::end(); ?>
 
 
 

@@ -174,6 +174,9 @@ class EducationController extends Controller
             $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($models, 'id', 'id')));
             array_walk($models, function ($s_model) use ($user_id){
                 $s_model->user_id = $user_id;
+//                echo "<pre>";
+//                print_r($s_model);
+//                die();
             });
 
             $valid = MultiModel::validateMultiple($models);
