@@ -55,13 +55,9 @@ echo StepsWidget::widget(['currentStep' => 4]);
             'model' => $models[0],
             'formId' => 'dynamic-form',
             'formFields' => [
-                'company_name',
-                'designation',
-                'department',
-                'year_from',
-                'year_to',
-                'responsibilities',
-                'currently_working',
+                'name',
+                'level',
+                'description',
 //            'is_active',
             ],
         ]);
@@ -72,16 +68,15 @@ echo StepsWidget::widget(['currentStep' => 4]);
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-envelope"></i> Skill
-                <button type="button" class="pull-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add Experience</button>
+                <button type="button" class="pull-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> Add Skill</button>
                 <div class="clearfix"></div>
             </div>
 
             <div class="panel-body container-items"><!-- widgetContainer -->
                 <?php foreach ($models as $index => $modelSkill): ?>
-                    <?php $currently_working_class = ($modelSkill->currently_working) ? 'uncheck' :'check'; ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
                         <div class="panel-heading">
-                            <span class="panel-title">Experience: <?= ($index + 1) ?></span>
+                            <span class="panel-title">Skill: <?= ($index + 1) ?></span>
                             <button type="button" class="pull-right remove-item btn btn-danger btn-xs"><i class="fa fa-minus"></i></button>
                             <div class="clearfix"></div>
                         </div>
@@ -105,7 +100,7 @@ echo StepsWidget::widget(['currentStep' => 4]);
 
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <?= $form->field($modelSkill, "[{$index}]year_to")->textInput(['class' => 'form-control datepicker year-to']) ?>
+                                    <?= $form->field($modelSkill, "[{$index}]description")->textarea(['rows' => 6]) ?>
                                 </div>
                             </div>
                      </div>
@@ -140,16 +135,14 @@ $js = '
     jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
         jQuery(".dynamicform_wrapper .item .panel-title").each(function(index) {
                 
-            jQuery(this).html("Experience: " + (index + 1))
-            jQuery(".dynamicform_wrapper .item:last-child .currently-working").prop(\'checked\', false);
+            jQuery(this).html("Skill: " + (index + 1))            
         });
         
         
         
        
         
-        $(".dynamicform_wrapper .item:last-child input, .dynamicform_wrapper .item:last-child textarea .dynamicform_wrapper .item:last-child select").val("");
-        $(".dynamicform_wrapper .item:last-child .currently_working").removeAttr(\'checked\');
+        $(".dynamicform_wrapper .item:last-child input, .dynamicform_wrapper .item:last-child textarea, .dynamicform_wrapper .item:last-child select").val("");     
 //        $(".dynamicform_wrapper .item:last-child .form-group").css("background", "#f00");
           $(\'.datepicker\').each(function() {
             $(this).datepicker();
@@ -164,15 +157,10 @@ $js = '
     jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
 //    alert(2);
         jQuery(".dynamicform_wrapper .item .panel-title").each(function(index) {
-            jQuery(this).html("Experience: " + (index + 1))
+            jQuery(this).html("Skill: " + (index + 1))
         });
     });
-    
-//    $(".currently_working").click(function() {
-//        alert(1);
-//    });
-    
-//    $(\'body\').on(\'click\',".currently_working",function() {
+
     
     ';
 

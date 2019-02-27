@@ -17,7 +17,7 @@ $this->title = 'Add Certification';
     <?php /* */ ?>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'models' => $models,
     ]) ?>
 
 </div>

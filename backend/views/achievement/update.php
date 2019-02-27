@@ -17,7 +17,7 @@ $this->title = 'Update Achievement';
     <?php /* */ ?>
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'models' => $models,
     ]) ?>
 
 </div>

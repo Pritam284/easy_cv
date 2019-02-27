@@ -86,8 +86,8 @@ echo StepsWidget::widget(['currentStep' => 7]);
 </div>
 
 <?php
-    $js = '
-     jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
+$js = '
+    jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 //    alert(1);
            console.log(item);
            console.log(jQuery(".dynamicform_wrapper .item").length);
@@ -97,21 +97,29 @@ echo StepsWidget::widget(['currentStep' => 7]);
         });
         $(".dynamicform_wrapper .item:last-child input, .dynamicform_wrapper .item:last-child textarea, .dynamicform_wrapper .item:last-child select").val("");
 //        $(".dynamicform_wrapper .item:last-child .form-group").css("background", "#f00");
+          $(\'.datepicker\').each(function() {
+            $(this).datepicker();
+        });  
         sleep(500);
         $(".dynamicform_wrapper .item:last-child .form-group").removeClass("has-error");
         $(".dynamicform_wrapper .item:last-child .form-group .help-block").html("");
+        console.log($(\'.datepicker\').length);
         
     });
     
     jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
 //    alert(2);
         jQuery(".dynamicform_wrapper .item .panel-title").each(function(index) {
-            jQuery(this).html("Education: " + (index + 1))
+            jQuery(this).html("Language: " + (index + 1))
         });
     });
     ';
 
-//    $this->registerJs($js);
+$this->registerJs($js);
+
+$this->registerJs("
+    console.log($('#dynamic-form').data('yiiActiveForm').attributes);
+", yii\web\View::POS_LOAD);
 
 ?>
 

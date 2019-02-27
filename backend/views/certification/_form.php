@@ -13,6 +13,8 @@ echo StepsWidget::widget(['currentStep' => 8]);
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<?php /* * ?>
+
 <div class="certification-form">
 
     <div class="row">
@@ -45,6 +47,5 @@ echo StepsWidget::widget(['currentStep' => 8]);
         </div>
     </div>
 
-
-
 </div>
+<?php /* */ ?>

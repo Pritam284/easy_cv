@@ -108,14 +108,6 @@ echo StepsWidget::widget(['currentStep' => 3]);
                                 </div>
                             </div>
 
-
-
-
-
-
-
-
-
                         </div>
                     </div>
                 <?php endforeach; ?>
